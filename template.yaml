@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  API for getting holidays in Japan
+
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  HolidaysFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
+    Properties:
+      CodeUri: holidays-api/
+      Handler: holidays-api
+      Runtime: provided.al2
+      Events:
+        CatchAll:
+          Type: HttpApi
