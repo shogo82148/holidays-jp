@@ -10,7 +10,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
@@ -20,8 +21,8 @@ func main() {
 }
 
 func _main() error {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	defer cancel()
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
 
 	if _, err := download(ctx); err != nil {
 		return err
