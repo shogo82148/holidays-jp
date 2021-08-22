@@ -1,0 +1,78 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test-updater:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.17"
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Install Dependencies
+        run: go mod download
+
+      - name: Test
+        run: go test -race -v -coverprofile=profile.cov ./...
+
+      - name: Send coverage
+        uses: shogo82148/actions-goveralls@v1
+        with:
+          path-to-profile: profile.cov
+          parallel: true
+          flag-name: updater
+
+  test-holidays-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.17"
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Install Dependencies
+        run: go mod download
+        working-directory: holidays-api
+
+      - name: Test
+        run: go test -race -v -coverprofile=profile.cov ./...
+        working-directory: holidays-api
+
+      - name: Send coverage
+        uses: shogo82148/actions-goveralls@v1
+        with:
+          path-to-profile: profile.cov
+          parallel: true
+          flag-name: holidays-api
+          working-directory: holidays-api
+
+  finish:
+    needs:
+      - test-updater
+      - test-holidays-api
+    runs-on: ubuntu-latest
+    steps:
+      - name: finish
+        uses: shogo82148/actions-goveralls@v1
+        with:
+          parallel-finished: true
