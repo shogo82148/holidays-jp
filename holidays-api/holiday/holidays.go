@@ -12,6 +12,12 @@ type Holiday struct {
 	Name string
 }
 
+type withDate []Holiday
+
+func (s withDate) Len() int           { return len(s) }
+func (s withDate) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
+func (s withDate) Less(i, j int) bool { return s[i].Date < s[j].Date }
+
 // findHoliday returns whether the specific day is a holiday.
 func findHoliday(year int, month time.Month, day int) (Holiday, bool) {
 	date := fmt.Sprintf("%04d-%02d-%02d", year, int(month), day)
@@ -119,5 +125,13 @@ func calcHolidaysInMonthWithoutInLieu(year int, month time.Month) []Holiday {
 
 	// TODO: 春分の日, 秋分の日
 
+	yearMonthPrefix := yearPrefix + monthPrefix
+	for _, d := range specialHolidays {
+		if strings.HasPrefix(d.Date, yearMonthPrefix) {
+			holydays = append(holydays, d)
+		}
+	}
+
+	sort.Sort(withDate(holydays))
 	return holydays
 }

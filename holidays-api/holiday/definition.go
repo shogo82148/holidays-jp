@@ -288,3 +288,40 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 		},
 	},
 }
+
+var specialHolidays = []Holiday{
+	// 昭和四十三年法律第十六号
+	// 皇太子明仁親王の結婚の儀の行われる日を休日とする法律
+	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/03119590317016.htm
+	// 皇太子明仁親王の婚姻を国民こぞつて祝うため、結婚の儀の行われる日を休日とする。
+	{
+		Date: "1959-04-10",
+		Name: "結婚の儀",
+	},
+
+	{
+		Date: "1989-02-24",
+		Name: "大喪の礼",
+	},
+	{
+		Date: "1990-11-12",
+		Name: "即位礼正殿の儀",
+	},
+
+	{
+		Date: "1993-06-09",
+		Name: "結婚の儀",
+	},
+
+	// 平成三十年法律第九十九号
+	// 天皇の即位の日及び即位礼正殿の儀の行われる日を休日とする法律
+	// https://elaws.e-gov.go.jp/document?lawid=430AC0000000099
+	{
+		Date: "2019-05-01",
+		Name: "休日（祝日扱い）", // "天皇の即位の日",
+	},
+	{
+		Date: "2019-10-22",
+		Name: "休日（祝日扱い）", // "即位礼正殿の儀の行われる日",
+	},
+}
