@@ -37,3 +37,17 @@ func findHolidaysInMonth(year int, month time.Month) []Holiday {
 	})
 	return holidays[start:end]
 }
+
+// findHolidaysInYear returns holidays in the specific year.
+func findHolidaysInYear(year int) []Holiday {
+	startDate := fmt.Sprintf("%04d-01-01", year)
+	endDate := fmt.Sprintf("%04d-99-99", year)
+
+	start := sort.Search(len(holidays), func(i int) bool {
+		return holidays[i].Date >= startDate
+	})
+	end := sort.Search(len(holidays), func(i int) bool {
+		return holidays[i].Date >= endDate
+	})
+	return holidays[start:end]
+}

@@ -33,3 +33,72 @@ func TestFindHolidaysInMonth(t *testing.T) {
 		t.Errorf("holidays not match: (-want/+got)\n%s", diff)
 	}
 }
+
+func TestFindHolidaysInYear(t *testing.T) {
+	got := findHolidaysInYear(2000)
+	want := []Holiday{
+		{
+			Date: "2000-01-01",
+			Name: "元日",
+		},
+		{
+			Date: "2000-01-10",
+			Name: "成人の日",
+		},
+		{
+			Date: "2000-02-11",
+			Name: "建国記念の日",
+		},
+		{
+			Date: "2000-03-20",
+			Name: "春分の日",
+		},
+		{
+			Date: "2000-04-29",
+			Name: "みどりの日",
+		},
+		{
+			Date: "2000-05-03",
+			Name: "憲法記念日",
+		},
+		{
+			Date: "2000-05-04",
+			Name: "休日",
+		},
+		{
+			Date: "2000-05-05",
+			Name: "こどもの日",
+		},
+		{
+			Date: "2000-07-20",
+			Name: "海の日",
+		},
+		{
+			Date: "2000-09-15",
+			Name: "敬老の日",
+		},
+		{
+			Date: "2000-09-23",
+			Name: "秋分の日",
+		},
+		{
+			Date: "2000-10-09",
+			Name: "体育の日",
+		},
+		{
+			Date: "2000-11-03",
+			Name: "文化の日",
+		},
+		{
+			Date: "2000-11-23",
+			Name: "勤労感謝の日",
+		},
+		{
+			Date: "2000-12-23",
+			Name: "天皇誕生日",
+		},
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("holidays not match: (-want/+got)\n%s", diff)
+	}
+}
