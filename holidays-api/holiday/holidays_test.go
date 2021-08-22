@@ -102,3 +102,20 @@ func TestFindHolidaysInYear(t *testing.T) {
 		t.Errorf("holidays not match: (-want/+got)\n%s", diff)
 	}
 }
+
+func TestCalcHolidaysInMonthWithoutInLieu(t *testing.T) {
+	got := calcHolidaysInMonthWithoutInLieu(2022, time.January)
+	want := []Holiday{
+		{
+			Date: "2022-01-01",
+			Name: "元日",
+		},
+		{
+			Date: "2022-01-10",
+			Name: "成人の日",
+		},
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("holidays not match: (-want/+got)\n%s", diff)
+	}
+}
