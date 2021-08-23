@@ -10,6 +10,14 @@ import (
 
 const dateLayout = "2006-01-02"
 
+func mustParseDate(date string) time.Time {
+	d, err := time.Parse(dateLayout, date)
+	if err != nil {
+		panic(err)
+	}
+	return d
+}
+
 type Holiday struct {
 	Date string
 	Name string
@@ -162,14 +170,8 @@ func calcHolidaysInMonth(year int, month time.Month) []Holiday {
 	if year >= 1986 {
 		var extraHolidays []Holiday
 		for i := 0; i < len(holidays)-1; i++ {
-			holidayA, err := time.Parse(dateLayout, holidays[i].Date)
-			if err != nil {
-				panic(err)
-			}
-			holidayB, err := time.Parse(dateLayout, holidays[i+1].Date)
-			if err != nil {
-				panic(err)
-			}
+			holidayA := mustParseDate(holidays[i].Date)
+			holidayB := mustParseDate(holidays[i+1].Date)
 
 			// > 第三条に次の一項を加える。
 			// > ３　その前日及び翌日が「国民の祝日」である日（日曜日にあたる日及び前項に規定する休日にあたる日を除く。）は、休日とする。
@@ -183,6 +185,40 @@ func calcHolidaysInMonth(year int, month time.Month) []Holiday {
 				}
 			}
 		}
+
+		// Handle edge cases that span months
+		if len(holidays) > 0 {
+			firstHolidayInMonth := mustParseDate(holidays[0].Date)
+			beforeTwoDays := firstHolidayInMonth.Add(-2 * 24 * time.Hour)
+			if firstHolidayInMonth.Month() != beforeTwoDays.Month() && firstHolidayInMonth.Weekday() != time.Monday {
+				// the first day in the month might be a holiday
+				previousHolidays := calcHolidaysInMonthWithoutInLieu(
+					beforeTwoDays.Year(), beforeTwoDays.Month(),
+				)
+				if len(previousHolidays) > 0 && previousHolidays[len(previousHolidays)-1].Date == beforeTwoDays.Format(dateLayout) {
+					extraHolidays = append(extraHolidays, Holiday{
+						Date: firstHolidayInMonth.Add(-24 * time.Hour).Format(dateLayout),
+						Name: "休日",
+					})
+				}
+			}
+
+			lastHolidayInMonth := mustParseDate(holidays[len(holidays)-1].Date)
+			afterTwoDays := lastHolidayInMonth.Add(2 * 24 * time.Hour)
+			if lastHolidayInMonth.Month() != afterTwoDays.Month() && lastHolidayInMonth.Weekday() != time.Monday {
+				// the last day in the month might be a holiday
+				nextHolidays := calcHolidaysInMonthWithoutInLieu(
+					afterTwoDays.Year(), afterTwoDays.Month(),
+				)
+				if len(nextHolidays) > 0 && nextHolidays[0].Date == afterTwoDays.Format(dateLayout) {
+					extraHolidays = append(extraHolidays, Holiday{
+						Date: lastHolidayInMonth.Add(24 * time.Hour).Format(dateLayout),
+						Name: "休日",
+					})
+				}
+			}
+		}
+
 		holidays = append(holidays, extraHolidays...)
 		sort.Sort(withDate(holidays))
 	}
