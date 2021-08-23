@@ -2,17 +2,6 @@ package holiday
 
 import "time"
 
-// 国民の祝日に関する法律の一部を改正する法律
-// 平成三十年法律第五十七号
-// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/19620180620057.htm
-// > スポーツの日　　十月の第二月曜日　　スポーツを楽しみ、他者を尊重する精神を培うとともに、健康で活力ある社会の実現を願う。
-
-// 天皇の退位等に関する皇室典範特例法
-// 平成二十九年法律第六十三号
-// https://elaws.e-gov.go.jp/document?lawid=429AC0000000063
-// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/19320170616063.htm
-// > 天皇誕生日 二月二十三日 天皇の誕生日を祝う。
-
 // 昭和二十三年法律第百七十八号
 // 国民の祝日に関する法律
 // https://elaws.e-gov.go.jp/document?lawid=323AC1000000178
@@ -88,16 +77,16 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 			},
 			// 海の日　七月の第三月曜日　海の恩恵に感謝するとともに、海洋国日本の繁栄を願う。
 			{
-				Month:   time.September,
+				Month:   time.July,
 				Weekday: time.Monday,
 				Index:   2,
 				Name:    "海の日",
 			},
 			// 敬老の日　九月の第三月曜日　多年にわたり社会につくしてきた老人を敬愛し、長寿を祝う。
 			{
-				Month:   time.October,
+				Month:   time.September,
 				Weekday: time.Monday,
-				Index:   1,
+				Index:   2,
 				Name:    "敬老の日",
 			},
 		},
@@ -157,7 +146,7 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 				Name: "海の日",
 			},
 			{
-				Date: "07-24",
+				Date: "07-23",
 				Name: "スポーツの日",
 			},
 			{
@@ -186,9 +175,9 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 			},
 			// 敬老の日　九月の第三月曜日　多年にわたり社会につくしてきた老人を敬愛し、長寿を祝う。
 			{
-				Month:   time.October,
+				Month:   time.September,
 				Weekday: time.Monday,
-				Index:   1,
+				Index:   2,
 				Name:    "敬老の日",
 			},
 		},
@@ -280,9 +269,9 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 			},
 			// 敬老の日　九月の第三月曜日　多年にわたり社会につくしてきた老人を敬愛し、長寿を祝う。
 			{
-				Month:   time.October,
+				Month:   time.September,
 				Weekday: time.Monday,
-				Index:   1,
+				Index:   2,
 				Name:    "敬老の日",
 			},
 		},
