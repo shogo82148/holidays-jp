@@ -121,6 +121,12 @@ func formatHolidays(rawData []byte) error {
 
 		package holiday
 
+		// the year range of pre-calculated holidays
+		const (
+			holidaysStartYear = `+strings.Split(holidays[0].Date, "-")[0]+`
+			holidaysEndYear = `+strings.Split(holidays[len(holidays)-1].Date, "-")[0]+`
+		)
+
 		// 内閣府ホーム  >  内閣府の政策  >  制度  >  国民の祝日について
 		// https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
 		// Based on `+syukujitsuURL+`

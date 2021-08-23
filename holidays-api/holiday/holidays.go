@@ -151,6 +151,20 @@ func calcHolidaysInMonthWithoutInLieu(year int, month time.Month) []Holiday {
 	return holydays
 }
 
+func calcHolidaysInMonth(year int, month time.Month) []Holiday {
+	// add holidays in lieu
+	return calcHolidaysInMonthWithoutInLieu(year, month)
+}
+
+func calcHolidaysInYear(year int) []Holiday {
+	var result []Holiday
+	for month := time.January; month <= time.December; month++ {
+		holidays := calcHolidaysInMonth(year, month)
+		result = append(result, holidays...)
+	}
+	return result
+}
+
 // from 長沢 工(1999) "日の出・日の入りの計算 天体の出没時刻の求め方" 株式会社地人書館
 var sunLongitudeTable = [...][3]float64{
 	{0.0200, 355.05, 719.981},

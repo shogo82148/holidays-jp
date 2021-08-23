@@ -2,6 +2,12 @@
 
 package holiday
 
+// the year range of pre-calculated holidays
+const (
+	holidaysStartYear = 1955
+	holidaysEndYear   = 2022
+)
+
 // 内閣府ホーム  >  内閣府の政策  >  制度  >  国民の祝日について
 // https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
 // Based on https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv

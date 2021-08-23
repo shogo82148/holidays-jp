@@ -119,3 +119,13 @@ func TestCalcHolidaysInMonthWithoutInLieu(t *testing.T) {
 		t.Errorf("holidays not match: (-want/+got)\n%s", diff)
 	}
 }
+
+func TestCalcHolidaysInYear(t *testing.T) {
+	for year := holidaysStartYear; year <= holidaysEndYear; year++ {
+		want := findHolidaysInYear(year)
+		got := calcHolidaysInYear(year)
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("holidays in %d mismatch: (-want/+got):\n%s", year, diff)
+		}
+	}
+}
