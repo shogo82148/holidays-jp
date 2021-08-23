@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const dateLayout = "2006-01-02"
+
 type Holiday struct {
 	Date string
 	Name string
@@ -152,8 +154,78 @@ func calcHolidaysInMonthWithoutInLieu(year int, month time.Month) []Holiday {
 }
 
 func calcHolidaysInMonth(year int, month time.Month) []Holiday {
-	// add holidays in lieu
-	return calcHolidaysInMonthWithoutInLieu(year, month)
+	holidays := calcHolidaysInMonthWithoutInLieu(year, month)
+
+	// 昭和四十八年法律第十号
+	// 国民の祝日に関する法律の一部を改正する法律
+	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/07119730412010.htm
+	// > 第三条に次の一項を加える。
+	// > ２　「国民の祝日」が日曜日にあたるときは、その翌日を休日とする。
+	if 1973 <= year && year < 2007 {
+		var holidaysInLieu []Holiday
+		for _, holiday := range holidays {
+
+			// This law was enacted on April 12, 1973,
+			// so it did not apply to holidays before that date.
+			if holiday.Date <= "1973-04-12" {
+				continue
+			}
+
+			d, err := time.Parse(dateLayout, holiday.Date)
+			if err != nil {
+				panic(err)
+			}
+			if d.Weekday() != time.Sunday {
+				continue
+			}
+			d = d.Add(24 * time.Hour)
+			if !contains(holidays, d.Format(dateLayout)) {
+				holidaysInLieu = append(holidaysInLieu, Holiday{
+					Date: d.Format(dateLayout),
+					Name: "休日",
+				})
+			}
+		}
+		holidays = append(holidays, holidaysInLieu...)
+		sort.Sort(withDate(holidays))
+	}
+
+	// 平成十七年法律第四十三号
+	// 国民の祝日に関する法律の一部を改正する法律
+	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/16220050520043.htm
+	if year >= 2007 {
+		var holidaysInLieu []Holiday
+		for _, holiday := range holidays {
+			d, err := time.Parse(dateLayout, holiday.Date)
+			if err != nil {
+				panic(err)
+			}
+			if d.Weekday() != time.Sunday {
+				continue
+			}
+			d = d.Add(24 * time.Hour)
+			for contains(holidays, d.Format(dateLayout)) {
+				d = d.Add(24 * time.Hour)
+			}
+			holidaysInLieu = append(holidaysInLieu, Holiday{
+				Date: d.Format(dateLayout),
+				Name: "休日",
+			})
+		}
+		holidays = append(holidays, holidaysInLieu...)
+		sort.Sort(withDate(holidays))
+	}
+
+	return holidays
+}
+
+func contains(holidays []Holiday, date string) bool {
+	for _, d := range holidays {
+		if d.Date == date {
+			return true
+		}
+	}
+	return false
 }
 
 func calcHolidaysInYear(year int) []Holiday {
