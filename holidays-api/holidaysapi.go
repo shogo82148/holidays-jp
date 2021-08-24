@@ -38,6 +38,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		io.WriteString(w, `{"error":"not found"}`)
+		return
 	}
 	switch {
 	case year == 0:
