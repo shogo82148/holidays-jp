@@ -10,7 +10,7 @@ import (
 
 // FindHoliday returns whether the specific day is a holiday.
 func FindHoliday(year int, month time.Month, day int) (Holiday, bool) {
-	if holidaysStartYear <= year || year <= holidaysEndYear {
+	if holidaysStartYear <= year && year <= holidaysEndYear {
 		// return from pre-calculated holidays
 		return findHoliday(year, month, day)
 	}
@@ -28,7 +28,7 @@ func FindHoliday(year int, month time.Month, day int) (Holiday, bool) {
 
 // FindHolidaysInMonth returns holidays in the month.
 func FindHolidaysInMonth(year int, month time.Month) []Holiday {
-	if holidaysStartYear <= year || year <= holidaysEndYear {
+	if holidaysStartYear <= year && year <= holidaysEndYear {
 		// return from pre-calculated holidays
 		return findHolidaysInMonth(year, month)
 	}
@@ -39,7 +39,7 @@ func FindHolidaysInMonth(year int, month time.Month) []Holiday {
 
 // FindHolidaysInYear returns holidays in the year.
 func FindHolidaysInYear(year int) []Holiday {
-	if holidaysStartYear <= year || year <= holidaysEndYear {
+	if holidaysStartYear <= year && year <= holidaysEndYear {
 		// return from pre-calculated holidays
 		return findHolidaysInYear(year)
 	}
