@@ -8,6 +8,46 @@ import (
 	"time"
 )
 
+// FindHoliday returns whether the specific day is a holiday.
+func FindHoliday(year int, month time.Month, day int) (Holiday, bool) {
+	if holidaysStartYear <= year && year <= holidaysEndYear {
+		// return from pre-calculated holidays
+		return findHoliday(year, month, day)
+	}
+
+	// calculate holidays based on the law
+	date := fmt.Sprintf("%04d-%02d-%02d", year, int(month), day)
+	holidays := calcHolidaysInMonth(year, month)
+	for _, d := range holidays {
+		if d.Date == date {
+			return d, true
+		}
+	}
+	return Holiday{}, false
+}
+
+// FindHolidaysInMonth returns holidays in the month.
+func FindHolidaysInMonth(year int, month time.Month) []Holiday {
+	if holidaysStartYear <= year && year <= holidaysEndYear {
+		// return from pre-calculated holidays
+		return findHolidaysInMonth(year, month)
+	}
+
+	// calculate holidays based on the law
+	return calcHolidaysInMonth(year, month)
+}
+
+// FindHolidaysInYear returns holidays in the year.
+func FindHolidaysInYear(year int) []Holiday {
+	if holidaysStartYear <= year && year <= holidaysEndYear {
+		// return from pre-calculated holidays
+		return findHolidaysInYear(year)
+	}
+
+	// calculate holidays based on the law
+	return calcHolidaysInYear(year)
+}
+
 const dateLayout = "2006-01-02"
 
 func mustParseDate(date string) time.Time {
