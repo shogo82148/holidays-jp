@@ -7,5 +7,9 @@
 			"path": "holidays-api"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"cSpell.words": [
+			"syukujitsu"
+		]
+	}
 }
