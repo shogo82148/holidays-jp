@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   API for getting holidays in Japan
@@ -19,3 +19,32 @@ Resources:
       Events:
         CatchAll:
           Type: HttpApi
+          Properties:
+            ApiId: !Ref HolidaysApi
+
+  HolidaysApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      Description: API for getting holidays in Japan
+      Domain:
+        CertificateArn: !Ref Certificate
+        DomainName: "holidays-jp.shogo82148.com"
+
+  RecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: "shogo82148.com."
+      Name: "holidays-jp.shogo82148.com"
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt ApiGatewayDomainNameV24c58e33fd3.RegionalDomainName
+        HostedZoneId: !GetAtt ApiGatewayDomainNameV24c58e33fd3.RegionalHostedZoneId
+
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: "holidays-jp.shogo82148.com"
+      ValidationMethod: "DNS"
+      DomainValidationOptions:
+        - DomainName: "holidays-jp.shogo82148.com"
+          HostedZoneId: Z1TR8BQNS8S1I7
