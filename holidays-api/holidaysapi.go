@@ -34,6 +34,10 @@ func NewHandler() *Handler {
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		h.responseNotFound(w)
+		return
+	}
 	year, month, day, err := parsePath(r.URL.Path)
 	if err != nil {
 		h.responseNotFound(w)
