@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestServeHTTP(t *testing.T) {
@@ -16,6 +18,9 @@ func TestServeHTTP(t *testing.T) {
 		h.ServeHTTP(w, req)
 
 		resp := w.Result()
+		if resp.StatusCode != http.StatusNotFound {
+			t.Errorf("unexpected status code: want %d, got %d", http.StatusNotFound, resp.StatusCode)
+		}
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {
 			t.Fatal(err)
@@ -23,6 +28,165 @@ func TestServeHTTP(t *testing.T) {
 		var v interface{}
 		if err := json.Unmarshal(body, &v); err != nil {
 			t.Fatal(err)
+		}
+	})
+
+	t.Run("year", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "http://example.com/2000", nil)
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+
+		resp := w.Result()
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("unexpected status code: want %d, got %d", http.StatusOK, resp.StatusCode)
+		}
+		if resp.Header.Get("Cache-Control") == "" {
+			t.Error("Cache-Control is not set")
+		}
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var got Response
+		if err := json.Unmarshal(body, &got); err != nil {
+			t.Fatal(err)
+		}
+		want := Response{
+			Holidays: []Holiday{
+				{
+					Date: "2000-01-01",
+					Name: "元日",
+				},
+				{
+					Date: "2000-01-10",
+					Name: "成人の日",
+				},
+				{
+					Date: "2000-02-11",
+					Name: "建国記念の日",
+				},
+				{
+					Date: "2000-03-20",
+					Name: "春分の日",
+				},
+				{
+					Date: "2000-04-29",
+					Name: "みどりの日",
+				},
+				{
+					Date: "2000-05-03",
+					Name: "憲法記念日",
+				},
+				{
+					Date: "2000-05-04",
+					Name: "休日",
+				},
+				{
+					Date: "2000-05-05",
+					Name: "こどもの日",
+				},
+				{
+					Date: "2000-07-20",
+					Name: "海の日",
+				},
+				{
+					Date: "2000-09-15",
+					Name: "敬老の日",
+				},
+				{
+					Date: "2000-09-23",
+					Name: "秋分の日",
+				},
+				{
+					Date: "2000-10-09",
+					Name: "体育の日",
+				},
+				{
+					Date: "2000-11-03",
+					Name: "文化の日",
+				},
+				{
+					Date: "2000-11-23",
+					Name: "勤労感謝の日",
+				},
+				{
+					Date: "2000-12-23",
+					Name: "天皇誕生日",
+				},
+			},
+		}
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("unexpected response: (-want/+got)\n%s", diff)
+		}
+	})
+
+	t.Run("month", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "http://example.com/2000/01", nil)
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+
+		resp := w.Result()
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("unexpected status code: want %d, got %d", http.StatusOK, resp.StatusCode)
+		}
+		if resp.Header.Get("Cache-Control") == "" {
+			t.Error("Cache-Control is not set")
+		}
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var got Response
+		if err := json.Unmarshal(body, &got); err != nil {
+			t.Fatal(err)
+		}
+		want := Response{
+			Holidays: []Holiday{
+				{
+					Date: "2000-01-01",
+					Name: "元日",
+				},
+				{
+					Date: "2000-01-10",
+					Name: "成人の日",
+				},
+			},
+		}
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("unexpected response: (-want/+got)\n%s", diff)
+		}
+	})
+
+	t.Run("holiday", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "http://example.com/2000/01/01", nil)
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+
+		resp := w.Result()
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("unexpected status code: want %d, got %d", http.StatusOK, resp.StatusCode)
+		}
+		if resp.Header.Get("Cache-Control") == "" {
+			t.Error("Cache-Control is not set")
+		}
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var got Response
+		if err := json.Unmarshal(body, &got); err != nil {
+			t.Fatal(err)
+		}
+		want := Response{
+			Holidays: []Holiday{
+				{
+					Date: "2000-01-01",
+					Name: "元日",
+				},
+			},
+		}
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("unexpected response: (-want/+got)\n%s", diff)
 		}
 	})
 }
