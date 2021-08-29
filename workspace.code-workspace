@@ -8,6 +8,9 @@
 		}
 	],
 	"settings": {
+		"files.exclude": {
+			"holidays-api": true
+		},
 		"cSpell.words": [
 			"syukujitsu"
 		]

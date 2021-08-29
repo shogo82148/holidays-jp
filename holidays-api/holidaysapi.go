@@ -36,22 +36,19 @@ func NewHandler() *Handler {
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	year, month, day, err := parsePath(r.URL.Path)
 	if err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		io.WriteString(w, `{"error":"not found"}`)
+		h.responseNotFound(w)
 		return
 	}
 	switch {
 	case year == 0:
-		w.WriteHeader(http.StatusNotFound)
-		io.WriteString(w, `{"error":"not found"}`)
+		h.responseNotFound(w)
 	case month == 0:
 		// 2006
 		h.holidaysInYear(w, year)
 	case day == 0:
 		// 2006/01
 		if month < 1 || month > 12 {
-			w.WriteHeader(http.StatusNotFound)
-			io.WriteString(w, `{"error":"not found"}`)
+			h.responseNotFound(w)
 			return
 		}
 		h.holidaysInMonth(w, year, time.Month(month))
@@ -59,8 +56,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// 2006/01/02
 		_, err := time.Parse("2006/01/02", fmt.Sprintf("%04d/%02d/%02d", year, month, day))
 		if err != nil {
-			w.WriteHeader(http.StatusNotFound)
-			io.WriteString(w, `{"error":"not found"}`)
+			h.responseNotFound(w)
 			return
 		}
 		h.holiday(w, year, time.Month(month), day)
@@ -153,4 +149,11 @@ func (h *Handler) responseHolidays(w http.ResponseWriter, holidays []holiday.Hol
 	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)
+}
+
+func (h *Handler) responseNotFound(w http.ResponseWriter) {
+	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 24*60*60))
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusNotFound)
+	io.WriteString(w, `{"error":"not found"}`)
 }
