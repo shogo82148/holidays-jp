@@ -27,6 +27,8 @@ jobs:
         run: go mod download
 
       - name: Update syukujitsu.csv
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           DATE=$(date +%Y%m%d-%H%M%S)
           BRANCH=update-$DATE
