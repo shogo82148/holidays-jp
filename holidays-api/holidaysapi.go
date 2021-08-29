@@ -14,6 +14,16 @@ import (
 	"github.com/shogo82148/holidays-jp/holidays-api/holiday"
 )
 
+var jst *time.Location
+
+func init() {
+	var err error
+	jst, err = time.LoadLocation("Asia/Tokyo")
+	if err != nil {
+		panic(err)
+	}
+}
+
 // Response is the response of Handler.
 type Response struct {
 	Holidays []Holiday `json:"holidays"`
@@ -113,6 +123,13 @@ func parseInt(s string, digits int) (int, error) {
 }
 
 func (h *Handler) holiday(w http.ResponseWriter, year int, month time.Month, day int) {
+	now := time.Now().In(jst)
+	if year < now.Year() || (year == now.Year() && month < now.Month()) || (year == now.Year() && month == now.Month() && day < now.Day()) {
+		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 365*24*60*60))
+	} else {
+		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 24*60*60))
+	}
+
 	d, ok := holiday.FindHoliday(year, month, day)
 	if ok {
 		h.responseHolidays(w, []holiday.Holiday{d})
@@ -122,11 +139,25 @@ func (h *Handler) holiday(w http.ResponseWriter, year int, month time.Month, day
 }
 
 func (h *Handler) holidaysInMonth(w http.ResponseWriter, year int, month time.Month) {
+	now := time.Now().In(jst)
+	if year < now.Year() || (year == now.Year() && month < now.Month()) {
+		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 365*24*60*60))
+	} else {
+		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 24*60*60))
+	}
+
 	holidays := holiday.FindHolidaysInMonth(year, month)
 	h.responseHolidays(w, holidays)
 }
 
 func (h *Handler) holidaysInYear(w http.ResponseWriter, year int) {
+	now := time.Now().In(jst)
+	if year < now.Year() {
+		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 365*24*60*60))
+	} else {
+		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 24*60*60))
+	}
+
 	holidays := holiday.FindHolidaysInYear(year)
 	h.responseHolidays(w, holidays)
 }
