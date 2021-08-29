@@ -1,6 +1,31 @@
 package holidaysapi
 
-import "testing"
+import (
+	"encoding/json"
+	"io"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+)
+
+func TestServeHTTP(t *testing.T) {
+	h := NewHandler()
+	t.Run("not found", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "http://example.com/", nil)
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+
+		resp := w.Result()
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var v interface{}
+		if err := json.Unmarshal(body, &v); err != nil {
+			t.Fatal(err)
+		}
+	})
+}
 
 func TestParsePath(t *testing.T) {
 	tests := []struct {
