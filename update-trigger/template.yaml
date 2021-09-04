@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  update-trigger
+
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  TriggerFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
+    Properties:
+      CodeUri: trigger/
+      Handler: trigger
+      Runtime: provided.al2
+      Events:
+        Schedule:
+          Type: Schedule
+          Properties:
+            Schedule: "rate(1 day)"
+            Name: UpdateTrigger
+            Description: Create a repository dispatch event for https://github.com/shogo82148/holidays-jp
+            Enabled: true
+            Input: '{"owner":"shogo82148","repo":"holidays-jp","event_type":"update"}'
+      Environment:
+        Variables:
+          GITHUB_API: https://api.github.com
+          GITHUB_TOKEN: /github-actions/token
+      Policies:
+        - SSMParameterReadPolicy:
+            ParameterName: github-actions/token

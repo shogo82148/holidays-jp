@@ -1,0 +1,9 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "holidays-jp-update-trigger"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1ac6zv1wodues"
+s3_prefix = "holidays-jp-update-trigger"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"

@@ -8,12 +8,16 @@
 		},
 		{
 			"path": "updater"
-		}
+		},
+		{
+			"path": "update-trigger/trigger"
+		},
 	],
 	"settings": {
 		"files.exclude": {
 			"holidays-api": true,
-			"updater": true
+			"updater": true,
+			"update-trigger/trigger": true
 		},
 		"cSpell.words": [
 			"syukujitsu"
