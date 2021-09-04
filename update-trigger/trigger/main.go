@@ -21,7 +21,7 @@ var githubToken string
 type Input struct {
 	Owner         string                 `json:"owner"`
 	Repo          string                 `json:"repo"`
-	EventType     string                 `json:"envent_type"`
+	EventType     string                 `json:"event_type"`
 	ClientPayload map[string]interface{} `json:"client_payload,omitempty"`
 }
 
@@ -60,7 +60,7 @@ func loadGitHubToken(ctx context.Context) (string, error) {
 }
 
 type DispatchRequest struct {
-	EventType     string                 `json:"envent_type"`
+	EventType     string                 `json:"event_type"`
 	ClientPayload map[string]interface{} `json:"client_payload,omitempty"`
 }
 
