@@ -21,9 +21,11 @@ jobs:
             ${{ runner.os }}-go-
       - name: Install Dependencies
         run: go mod download
+        working-directory: updater
 
       - name: Test
         run: go test -race -v -coverprofile=profile.cov ./...
+        working-directory: updater
 
       - name: Send coverage
         uses: shogo82148/actions-goveralls@v1
@@ -31,6 +33,7 @@ jobs:
           path-to-profile: profile.cov
           parallel: true
           flag-name: updater
+          working-directory: updater
 
   test-holidays-api:
     runs-on: ubuntu-latest

@@ -5,11 +5,15 @@
 		},
 		{
 			"path": "holidays-api"
+		},
+		{
+			"path": "updater"
 		}
 	],
 	"settings": {
 		"files.exclude": {
-			"holidays-api": true
+			"holidays-api": true,
+			"updater": true
 		},
 		"cSpell.words": [
 			"syukujitsu"

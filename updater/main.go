@@ -29,7 +29,7 @@ import (
 // https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
 const syukujitsuURL = "https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv"
 
-const rawDataPath = "syukujitsu.csv"
+const rawDataPath = "../syukujitsu.csv"
 
 func main() {
 	if err := _main(); err != nil {
@@ -142,7 +142,7 @@ func formatHolidays(rawData []byte) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(filepath.Join("holidays-api", "holiday", "holidays_generated.go"), res, 0644)
+	return os.WriteFile(filepath.Join("../", "holidays-api", "holiday", "holidays_generated.go"), res, 0644)
 }
 
 // 2021/1/1 -> 2021-01-01

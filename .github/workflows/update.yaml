@@ -32,13 +32,16 @@ jobs:
         run: go mod download
 
       - name: Update syukujitsu.csv
+        run: go run main.go
+        working-directory: updater
+
+      - name: upload to origin
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           DATE=$(date +%Y%m%d-%H%M%S)
           BRANCH=update-$DATE
           git switch -c "$BRANCH"
-          go run ./internal/gen/gen.go
           git diff --exit-code --quiet && exit
           git add .
           git config --global user.email "shogo82148@gmail.com"
