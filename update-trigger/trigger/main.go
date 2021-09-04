@@ -27,7 +27,7 @@ type Input struct {
 
 func handler(ctx context.Context, input *Input) {
 	var err error
-	if githubToken != "" {
+	if githubToken == "" {
 		githubToken, err = loadGitHubToken(ctx)
 		if err != nil {
 			log.Println("failed to load GITHUB_TOKEN:", err)
