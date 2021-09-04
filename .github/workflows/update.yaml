@@ -1,7 +1,7 @@
 name: Update
 on:
-  schedule:
-    - cron: "15 7 * * *"
+  repository_dispatch:
+    types: [update]
   workflow_dispatch:
 
 jobs:
@@ -30,6 +30,7 @@ jobs:
             ${{ runner.os }}-go-
       - name: Install Dependencies
         run: go mod download
+        working-directory: updater
 
       - name: Update syukujitsu.csv
         run: go run main.go
