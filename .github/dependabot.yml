@@ -11,3 +11,7 @@ updates:
     directory: "/holidays-api/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gomod"
+    directory: "/update-trigger/trigger/"
+    schedule:
+      interval: "daily"
