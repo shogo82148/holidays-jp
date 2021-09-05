@@ -164,6 +164,7 @@ func (h *Handler) holidaysInYear(w http.ResponseWriter, year int) {
 
 func (h *Handler) responseHolidays(w http.ResponseWriter, holidays []holiday.Holiday) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Link", "<https://github.com/sponsors/shogo82148>; rel=\"author\"")
 
 	// ref. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#examples
 	w.Header().Set("Strict-Transport-Security", "max-age=63072000")
