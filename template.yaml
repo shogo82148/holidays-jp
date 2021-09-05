@@ -29,6 +29,7 @@ Resources:
       Domain:
         CertificateArn: !Ref Certificate
         DomainName: "holidays-jp.shogo82148.com"
+      CorsConfiguration: true
 
   RecordSet:
     Type: AWS::Route53::RecordSet
