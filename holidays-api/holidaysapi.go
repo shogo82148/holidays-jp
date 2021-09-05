@@ -165,6 +165,9 @@ func (h *Handler) holidaysInYear(w http.ResponseWriter, year int) {
 func (h *Handler) responseHolidays(w http.ResponseWriter, holidays []holiday.Holiday) {
 	w.Header().Set("Content-Type", "application/json")
 
+	// ref. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#examples
+	w.Header().Set("Strict-Transport-Security", "max-age=63072000")
+
 	res := make([]Holiday, 0, len(holidays))
 	for _, d := range holidays {
 		res = append(res, Holiday{
