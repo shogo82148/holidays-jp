@@ -16,6 +16,7 @@ Resources:
       CodeUri: holidays-api/
       Handler: holidays-api
       Runtime: provided.al2
+      Architectures: [ arm64 ]
       Events:
         CatchAll:
           Type: HttpApi
