@@ -94,13 +94,16 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 令和二年法律第六十八号
 	// 平成三十二年東京オリンピック競技大会・東京パラリンピック競技大会特別措置法等の一部を改正する法律
-	// https://www.shugiin.go.jp/Internet/itdb_housei.nsf/html/housei/20320201204068.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/Internet/itdb_housei.nsf/html/housei/20320201204068.htm
+	// 官報: https://kanpou.npb.go.jp/old/20201204/20201204h00387/20201204h003870003f.html
+	//
 	// > 第一条　平成三十二年東京オリンピック競技大会・東京パラリンピック競技大会特別措置法（平成二十七年法律第三十三号）の一部を次のように改正する。
 	// > (中略)
 	// > ２　令和三年の国民の祝日に関する祝日法の規定の適用については、祝日法第二条海の日の項中「七月の第三月曜日」とあるのは「七月二十二日」と、
 	// > 同条山の日の項中「八月十一日」とあるのは「八月八日」と、同条スポーツの日の項中「十月の第二月曜日」とあるのは「七月二十三日」とする。
 	{
 		// Tokyo Olympics 2020 rescheduled for 2021 due to a global pandemic as known as COVID-19.
+		// ref. 2021年の祝日移動について https://www.kantei.go.jp/jp/headline/tokyo2020/shukujitsu.html
 		BeginYear: 2021,
 		StaticHolydays: []staticHolyday{
 			// 元日　一月一日　年のはじめを祝う。
@@ -183,9 +186,11 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 		},
 	},
 
-	// 平成二十七年法律第三十三号
-	// 令和三年東京オリンピック競技大会・東京パラリンピック競技大会特別措置法
-	// https://elaws.e-gov.go.jp/document?lawid=427AC0000000033
+	// 平成三十年法律第五十五号
+	// 平成三十二年東京オリンピック競技大会・東京パラリンピック競技大会特別措置法及び平成三十一年ラグビーワールドカップ大会特別措置法の一部を改正する法律
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/19620180620055.htm
+	// 官報: https://kanpou.npb.go.jp/old/20180620/20180620g00132/20180620g001320004f.html
+	//
 	// > 第五章　国民の祝日に関する法律の特例
 	// > 第三十二条　令和二年の国民の祝日（国民の祝日に関する法律（昭和二十三年法律第百七十八号。以下この条において「祝日法」という。）
 	// > 第一条に規定する国民の祝日をいう。次項において同じ。）に関する祝日法の規定の適用については、
@@ -279,11 +284,13 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 平成二十九年法律第六十三号
 	// 天皇の退位等に関する皇室典範特例法
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/19320170616063.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/19320170616063.htm
+	// 官報: https://kanpou.npb.go.jp/old/20170616/20170616g00128/20170616g001280035f.html
 	//
 	// 平成三十年法律第五十七号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/19620180620057.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/19620180620057.htm
+	// 官報: https://kanpou.npb.go.jp/old/20180620/20180620g00132/20180620g001320005f.html
 	{
 		BeginYear: 2019,
 		StaticHolydays: []staticHolyday{
@@ -383,7 +390,8 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 平成二十六年法律第四十三号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/18620140530043.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/18620140530043.htm
+	// 官報: https://kanpou.npb.go.jp/old/20140530/20140530g00119/20140530g001190016f.html
 	{
 		BeginYear: 2016,
 		StaticHolydays: []staticHolyday{
@@ -475,7 +483,8 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 平成十七年法律第四十三号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/16220050520043.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/16220050520043.htm
+	// 官報: https://kanpou.npb.go.jp/old/20050520/20050520g00109/20050520g001090005f.html
 	{
 		BeginYear: 2007,
 		StaticHolydays: []staticHolyday{
@@ -565,7 +574,7 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 平成十三年法律第五十九号
 	// 国民の祝日に関する法律及び老人福祉法の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/15120010622059.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/15120010622059.htm
 	{
 		BeginYear: 2003,
 		StaticHolydays: []staticHolyday{
@@ -648,7 +657,7 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 平成十年法律第百四十一号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/h143141.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/h143141.htm
 	{
 		BeginYear: 2000,
 		StaticHolydays: []staticHolyday{
@@ -726,7 +735,7 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 平成七年法律第二十二号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/11419890217005.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/11419890217005.htm
 	{
 		BeginYear: 1996,
 		StaticHolydays: []staticHolyday{
@@ -798,7 +807,7 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 平成元年法律第五号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/11419890217005.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/11419890217005.htm
 	{
 		BeginYear: 1989,
 		StaticHolydays: []staticHolyday{
@@ -867,7 +876,9 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 昭和四十一年政令第三百七十六号
 	// 建国記念の日となる日を定める政令
-	// https://elaws.e-gov.go.jp/document?lawid=341CO0000000376
+	// e-gov 法令検索 https://elaws.e-gov.go.jp/document?lawid=341CO0000000376
+	// 国立公文書館デジタルアーカイブ https://www.digital.archives.go.jp/DAS/meta/Detail_F0000000000000115298
+	//
 	// > 内閣は、国民の祝日に関する法律（昭和二十三年法律第百七十八号）第二条の規定に基づき、この政令を制定する。
 	// > 国民の祝日に関する法律第二条に規定する建国記念の日は、二月十一日とする。
 	{
@@ -928,7 +939,8 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 昭和四十一年法律第八十六号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/00219480720178.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/00219480720178.htm
+	// 国立公文書館デジタルアーカイブ https://www.digital.archives.go.jp/DAS/meta/listPhoto?LANG=default&BID=F0000000000000114857&ID=&TYPE=
 	{
 		BeginYear: 1966,
 		StaticHolydays: []staticHolyday{
@@ -996,7 +1008,8 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 昭和二十三年法律第百七十八号
 	// 国民の祝日に関する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/00219480720178.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/00219480720178.htm
+	// 国立公文書館デジタルアーカイブ: https://www.digital.archives.go.jp/img/130738
 	{
 		BeginYear: 1949,
 		StaticHolydays: []staticHolyday{
@@ -1040,7 +1053,8 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 
 	// 昭和二十三年法律第百七十八号
 	// 国民の祝日に関する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/00219480720178.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/00219480720178.htm
+	// 国立公文書館デジタルアーカイブ: https://www.digital.archives.go.jp/img/130738
 	{
 		BeginYear: 1948,
 		StaticHolydays: []staticHolyday{
@@ -1063,7 +1077,8 @@ var annuallyHolidaysRules = []annuallyHolidaysRule{
 var specialHolidays = []Holiday{
 	// 昭和四十三年法律第十六号
 	// 皇太子明仁親王の結婚の儀の行われる日を休日とする法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/03119590317016.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/03119590317016.htm
+	//
 	// > 皇太子明仁親王の婚姻を国民こぞつて祝うため、結婚の儀の行われる日を休日とする。
 	{
 		Date: "1959-04-10",
@@ -1072,7 +1087,8 @@ var specialHolidays = []Holiday{
 
 	// 平成元年法律第四号
 	// 昭和天皇の大喪の礼の行われる日を休日とする法律
-	// https://elaws.e-gov.go.jp/document?lawid=322AC0000000003
+	// 衆議院制定法律: https://www.shugiin.go.jp/Internet/itdb_housei.nsf/html/houritsu/11419890217004.htm
+	// ウィキソース: https://ja.wikisource.org/wiki/%E6%98%AD%E5%92%8C%E5%A4%A9%E7%9A%87%E3%81%AE%E5%A4%A7%E5%96%AA%E3%81%AE%E7%A4%BC%E3%81%AE%E8%A1%8C%E3%82%8F%E3%82%8C%E3%82%8B%E6%97%A5%E3%82%92%E4%BC%91%E6%97%A5%E3%81%A8%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B
 	// > 昭和天皇の大喪の礼の行われる日は、休日とする。
 	{
 		Date: "1989-02-24",
@@ -1081,16 +1097,16 @@ var specialHolidays = []Holiday{
 
 	// 平成二年法律第二十四号
 	// 即位礼正殿の儀の行われる日を休日とする法律
-	// https://ja.wikisource.org/wiki/%E5%8D%B3%E4%BD%8D%E7%A4%BC%E6%AD%A3%E6%AE%BF%E3%81%AE%E5%84%80%E3%81%AE%E8%A1%8C%E3%82%8F%E3%82%8C%E3%82%8B%E6%97%A5%E3%82%92%E4%BC%91%E6%97%A5%E3%81%A8%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B
+	// ウィキソース: https://ja.wikisource.org/wiki/%E5%8D%B3%E4%BD%8D%E7%A4%BC%E6%AD%A3%E6%AE%BF%E3%81%AE%E5%84%80%E3%81%AE%E8%A1%8C%E3%82%8F%E3%82%8C%E3%82%8B%E6%97%A5%E3%82%92%E4%BC%91%E6%97%A5%E3%81%A8%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B
 	// > 平成二年において即位礼正殿の儀の行われる日は、休日とする。
 	{
 		Date: "1990-11-12",
 		Name: "即位礼正殿の儀",
 	},
 
-	// 平成5年法律第32号
+	// 平成五年法律第三十二号
 	// 皇太子徳仁親王の結婚の儀の行われる日を休日とする法律
-	// https://ja.wikisource.org/wiki/%E7%9A%87%E5%A4%AA%E5%AD%90%E5%BE%B3%E4%BB%81%E8%A6%AA%E7%8E%8B%E3%81%AE%E7%B5%90%E5%A9%9A%E3%81%AE%E5%84%80%E3%81%AE%E8%A1%8C%E3%82%8F%E3%82%8C%E3%82%8B%E6%97%A5%E3%82%92%E4%BC%91%E6%97%A5%E3%81%A8%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B
+	// ウィキソース: https://ja.wikisource.org/wiki/%E7%9A%87%E5%A4%AA%E5%AD%90%E5%BE%B3%E4%BB%81%E8%A6%AA%E7%8E%8B%E3%81%AE%E7%B5%90%E5%A9%9A%E3%81%AE%E5%84%80%E3%81%AE%E8%A1%8C%E3%82%8F%E3%82%8C%E3%82%8B%E6%97%A5%E3%82%92%E4%BC%91%E6%97%A5%E3%81%A8%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B
 	// > 皇太子徳仁親王の結婚の儀の行われる日は、休日とする。
 	{
 		Date: "1993-06-09",
@@ -1099,7 +1115,12 @@ var specialHolidays = []Holiday{
 
 	// 平成三十年法律第九十九号
 	// 天皇の即位の日及び即位礼正殿の儀の行われる日を休日とする法律
-	// https://elaws.e-gov.go.jp/document?lawid=430AC0000000099
+	// e-gov 法令検索: https://elaws.e-gov.go.jp/document?lawid=430AC0000000099
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/19720181214099.htm
+	// 官報: https://kanpou.npb.go.jp/old/20181214/20181214g00276/20181214g002760064f.html
+	// ウィキソース: https://ja.wikisource.org/wiki/%E5%A4%A9%E7%9A%87%E3%81%AE%E5%8D%B3%E4%BD%8D%E3%81%AE%E6%97%A5%E5%8F%8A%E3%81%B3%E5%8D%B3%E4%BD%8D%E7%A4%BC%E6%AD%A3%E6%AE%BF%E3%81%AE%E5%84%80%E3%81%AE%E8%A1%8C%E3%82%8F%E3%82%8C%E3%82%8B%E6%97%A5%E3%82%92%E4%BC%91%E6%97%A5%E3%81%A8%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B
+	//
+	// > 天皇の即位の日及び即位礼正殿の儀の行われる日は、休日とする。
 	{
 		Date: "2019-05-01",
 		Name: "休日（祝日扱い）", // "天皇の即位の日",

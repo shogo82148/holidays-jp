@@ -206,7 +206,7 @@ func calcHolidaysInMonth(year int, month time.Month) []Holiday {
 
 	// 昭和六十年法律第百三号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/10319851227103.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/10319851227103.htm
 	if year >= 1986 {
 		var extraHolidays []Holiday
 		for i := 0; i < len(holidays)-1; i++ {
@@ -265,7 +265,8 @@ func calcHolidaysInMonth(year int, month time.Month) []Holiday {
 
 	// 昭和四十八年法律第十号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/07119730412010.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/07119730412010.htm
+	//
 	// > 第三条に次の一項を加える。
 	// > ２　「国民の祝日」が日曜日にあたるときは、その翌日を休日とする。
 	if 1973 <= year && year < 2007 {
@@ -299,7 +300,9 @@ func calcHolidaysInMonth(year int, month time.Month) []Holiday {
 
 	// 平成十七年法律第四十三号
 	// 国民の祝日に関する法律の一部を改正する法律
-	// https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/16220050520043.htm
+	// 衆議院制定法律: https://www.shugiin.go.jp/internet/itdb_housei.nsf/html/housei/16220050520043.htm
+	// 官報: https://kanpou.npb.go.jp/old/20050520/20050520g00109/20050520g001090005f.html
+	//
 	// > 第三条第二項中「あたるときは、その翌日」を「当たるときは、その日後においてその日に最も近い「国民の祝日」でない日」に改め、
 	// > 同条第三項中「日曜日にあたる日及び前項に規定する休日にあたる日を除く。」を「「国民の祝日」でない日に限る。」に改める。
 	if year >= 2007 {
