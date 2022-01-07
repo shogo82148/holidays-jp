@@ -3,6 +3,7 @@ version = 0.1
 [default.deploy]
 [default.deploy.parameters]
 stack_name = "holidays-jp"
+role_arn = "arn:aws:iam::445285296882:role/holidays-jp-cfn-service-role-ap-northeast-1"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-10nboesix5it7"
 s3_prefix = "holidays-jp"
 region = "ap-northeast-1"
