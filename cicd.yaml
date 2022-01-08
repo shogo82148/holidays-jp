@@ -98,5 +98,6 @@ Resources:
                   - "acm:*"
                   - "apigateway:*"
                   - "s3:*"
+                  - "events:*"
                 Resource:
                   - "*"
