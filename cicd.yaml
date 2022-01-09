@@ -101,3 +101,45 @@ Resources:
                   - "events:*"
                 Resource:
                   - "*"
+
+  # for GitHub Actions
+  GitHubActionsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "holidays-jp-github-actions-${AWS::Region}"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: arn:aws:iam::053160724612:root
+            Action: "sts:AssumeRole"
+            Condition:
+              StringEquals:
+                "sts:ExternalId": "R_kgDOF1U3OQ"
+          - Effect: Allow
+            Principal:
+              AWS: arn:aws:iam::053160724612:root
+            Action: "sts:TagSession"
+      Policies:
+        - PolicyName: SAMDeployment
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: CloudFormationOperation
+                Effect: Allow
+                Action:
+                  - "iam:PassRole"
+                Resource: !GetAtt DeploymentRole.Arn
+              - Sid: S3Operation
+                Effect: Allow
+                Action:
+                  - "s3:*"
+                Resource:
+                  - "arn:aws:s3:::aws-sam-cli-managed-default-samclisourcebucket-*/*"
+              - Sid: S3GetOperation
+                Effect: Allow
+                Action:
+                  - "s3:ListBucket"
+                Resource:
+                  - "arn:aws:s3:::aws-sam-cli-managed-default-samclisourcebucket-*"
