@@ -9,6 +9,7 @@ jobs:
       id-token: write
       statuses: write
       contents: read
+    environment: production
 
     steps:
       - name: Set up Go
