@@ -3,11 +3,11 @@ Description: >
   Continuous Deployment settings for holidays in Japan
 
 Resources:
-  # Permission Boundary for CI/CD Roles
+  # Permission Boundary for Roles
   DeploymentPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      Description: Permission Boundary for holidays-jp CI/CD Roles
+      Description: Permission Boundary for holidays-jp Roles
       ManagedPolicyName: !Sub "holidays-jp-permission-boundary-${AWS::Region}"
       PolicyDocument:
         Version: "2012-10-17"
