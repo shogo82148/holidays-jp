@@ -42,9 +42,11 @@ Resources:
                 Effect: Allow
                 Action:
                   - "iam:CreateRole"
-                  - "iam:DeleteRolePolicy"
-                  - "iam:DeleteRolePermissionsBoundary"
+                  - "iam:PutRolePolicy"
+                  - "iam:AttachRolePolicy"
                   - "iam:DetachRolePolicy"
+                  - "iam:DeleteRolePolicy"
+                  - "iam:PutRolePermissionsBoundary"
                 Resource: "*"
                 Condition:
                   StringEquals:
@@ -58,10 +60,10 @@ Resources:
                   - "iam:SetDefaultPolicyVersion"
                 Resource:
                   - !Ref DeploymentPolicy
-              - Sid: NoBoundaryUserDelete
+              - Sid: NoBoundaryRoleDelete
                 Effect: Deny
                 Action:
-                  - "iam:DeleteUserPermissionsBoundary"
+                  - "iam:DeleteRolePermissionsBoundary"
                 Resource: "*"
               - Sid: OtherIAMTasks
                 Effect: Allow
@@ -77,8 +79,6 @@ Resources:
                   - "iam:UpdateRole"
                   - "iam:UpdateRoleDescription"
                   - "iam:UpdateAssumeRolePolicy"
-                  - "iam:PutRolePermissionsBoundary"
-                  - "iam:PutRolePolicy"
                   - "iam:TagRole"
                   - "iam:UntagRole"
                   - "iam:DeleteRole"
