@@ -1,0 +1,55 @@
+name: deploy to production
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      statuses: write
+      contents: read
+    environment: production
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.17"
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Install Dependencies for the API
+        run: go mod download
+        working-directory: holidays-api
+      - name: Install Dependencies for the update-trigger
+        run: go mod download
+        working-directory: update-trigger/trigger
+
+      - name: build the API
+        run: make build
+      - name: build the the updater-trigger
+        run: make build
+        working-directory: update-trigger
+
+      - uses: fuller-inc/actions-aws-assume-role@v1
+        with:
+          aws-region: ap-northeast-1
+          role-to-assume: arn:aws:iam::445285296882:role/holidays-jp-github-actions-ap-northeast-1
+          role-session-tagging: true
+          use-node-id: true
+
+      - name: deploy the API
+        run: make deploy
+      - name: deploy the the updater-trigger
+        run: make deploy
+        working-directory: update-trigger
