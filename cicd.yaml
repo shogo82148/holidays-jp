@@ -4,11 +4,11 @@ Description: >
 
 Resources:
   # Permission Boundary for Roles
-  DeploymentPolicy:
+  PermissionsBoundary:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       Description: Permission Boundary for holidays-jp Roles
-      ManagedPolicyName: !Sub "holidays-jp-permission-boundary-${AWS::Region}"
+      ManagedPolicyName: !Sub "holidays-jp-permissions-boundary-${AWS::Region}"
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -50,7 +50,7 @@ Resources:
                 Resource: "*"
                 Condition:
                   StringEquals:
-                    "iam:PermissionsBoundary": !Ref DeploymentPolicy
+                    "iam:PermissionsBoundary": !Ref PermissionsBoundary
               - Sid: NoBoundaryPolicyEdit
                 Effect: Deny
                 Action:
@@ -59,7 +59,7 @@ Resources:
                   - "iam:DeletePolicyVersion"
                   - "iam:SetDefaultPolicyVersion"
                 Resource:
-                  - !Ref DeploymentPolicy
+                  - !Ref PermissionsBoundary
               - Sid: NoBoundaryRoleDelete
                 Effect: Deny
                 Action:
@@ -129,27 +129,28 @@ Resources:
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
-              - Sid: CloudFormationOperation
+              - Sid: PassRoleToCloudFormation
                 Effect: Allow
-                Action:
-                  - "iam:PassRole"
+                Action: "iam:PassRole"
                 Resource: !GetAtt DeploymentRole.Arn
               - Sid: CloudFormationStackOperation
                 Effect: Allow
-                Action:
-                  - "cloudformation:*"
+                Action: "cloudformation:*"
                 Resource:
                   - !Sub "arn:aws:cloudformation:ap-northeast-1:${AWS::AccountId}:stack/holidays-jp/*"
                   - !Sub "arn:aws:cloudformation:us-east-1:${AWS::AccountId}:stack/holidays-jp-update-trigger/*"
+              - Sid: CloudFormationDenyImport
+                Effect: Deny
+                Action: "cloudformation:*"
+                Resource: "*"
+                Condition:
+                  "ForAnyValue:StringLike":
+                    "cloudformation:ImportResourceTypes": ["*"]
               - Sid: S3Operation
                 Effect: Allow
-                Action:
-                  - "s3:*"
-                Resource:
-                  - "arn:aws:s3:::aws-sam-cli-managed-default-samclisourcebucket-*/*"
-              - Sid: S3GetOperation
+                Action: "s3:*"
+                Resource: "arn:aws:s3:::aws-sam-cli-managed-default-samclisourcebucket-*/*"
+              - Sid: S3ListOperation
                 Effect: Allow
-                Action:
-                  - "s3:ListBucket"
-                Resource:
-                  - "arn:aws:s3:::aws-sam-cli-managed-default-samclisourcebucket-*"
+                Action: "s3:ListBucket"
+                Resource: "arn:aws:s3:::aws-sam-cli-managed-default-samclisourcebucket-*"
