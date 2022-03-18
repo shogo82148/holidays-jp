@@ -25,7 +25,7 @@ func TestServeHTTP(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var v interface{}
+		var v any
 		if err := json.Unmarshal(body, &v); err != nil {
 			t.Fatal(err)
 		}

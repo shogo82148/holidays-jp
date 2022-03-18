@@ -19,10 +19,10 @@ import (
 var githubToken string
 
 type Input struct {
-	Owner         string                 `json:"owner"`
-	Repo          string                 `json:"repo"`
-	EventType     string                 `json:"event_type"`
-	ClientPayload map[string]interface{} `json:"client_payload,omitempty"`
+	Owner         string         `json:"owner"`
+	Repo          string         `json:"repo"`
+	EventType     string         `json:"event_type"`
+	ClientPayload map[string]any `json:"client_payload,omitempty"`
 }
 
 func handler(ctx context.Context, input *Input) {
@@ -60,8 +60,8 @@ func loadGitHubToken(ctx context.Context) (string, error) {
 }
 
 type DispatchRequest struct {
-	EventType     string                 `json:"event_type"`
-	ClientPayload map[string]interface{} `json:"client_payload,omitempty"`
+	EventType     string         `json:"event_type"`
+	ClientPayload map[string]any `json:"client_payload,omitempty"`
 }
 
 func triggerWorkflow(ctx context.Context, input *Input) error {
