@@ -193,6 +193,11 @@ func (h *Handler) responseHolidays(w http.ResponseWriter, holidays []holiday.Hol
 func (h *Handler) responseNotFound(w http.ResponseWriter) {
 	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 24*60*60))
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Link", "<https://github.com/sponsors/shogo82148>; rel=\"author\"")
+
+	// ref. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#examples
+	w.Header().Set("Strict-Transport-Security", "max-age=63072000")
+
 	w.WriteHeader(http.StatusNotFound)
-	io.WriteString(w, `{"error":"not found"}`)
+	io.WriteString(w, `{"error":"not found","message":"see https://github.com/shogo82148/holidays-jp/ for more information."}`)
 }
