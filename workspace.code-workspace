@@ -21,6 +21,7 @@
 		},
 		"cSpell.words": [
 			"syukujitsu"
-		]
+		],
+		"makefile.extensionOutputFolder": "./.vscode"
 	}
 }
