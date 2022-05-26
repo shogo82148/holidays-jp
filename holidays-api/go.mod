@@ -7,4 +7,7 @@ require (
 	github.com/shogo82148/ridgenative v1.2.0
 )
 
-require github.com/aws/aws-lambda-go v1.30.0 // indirect
+require (
+	github.com/aws/aws-lambda-go v1.30.0 // indirect
+	gopkg.in/yaml.v3 v3.0.0 // indirect
+)
