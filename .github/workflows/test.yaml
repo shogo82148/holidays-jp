@@ -5,23 +5,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: "1.19"
-
       - name: Check out code
         uses: actions/checkout@v3
 
-      - uses: actions/cache@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
         with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      - name: Install Dependencies
-        run: go mod download
-        working-directory: updater
+          go-version-file: 'updater/go.mod'
+          cache-dependency-path: 'updater/go.mod'
+          cache: true
 
       - name: Test
         run: go test -race -v -coverprofile=profile.cov ./...
@@ -39,23 +31,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: "1.19"
-
       - name: Check out code
         uses: actions/checkout@v3
 
-      - uses: actions/cache@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
         with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      - name: Install Dependencies
-        run: go mod download
-        working-directory: holidays-api
+          go-version-file: 'holidays-api/go.mod'
+          cache-dependency-path: 'holidays-api/go.mod'
+          cache: true
 
       - name: Test
         run: go test -race -v -coverprofile=profile.cov ./...
@@ -69,10 +53,38 @@ jobs:
           flag-name: holidays-api
           working-directory: holidays-api
 
+  test-update-trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: 'update-trigger/trigger/go.mod'
+          cache-dependency-path: 'update-trigger/trigger/go.mod'
+          cache: true
+
+      - name: Test
+        run: go test -race -v -coverprofile=profile.cov ./...
+        working-directory: update-trigger/trigger
+
+      - name: Send coverage
+        uses: shogo82148/actions-goveralls@v1
+        with:
+          path-to-profile: profile.cov
+          parallel: true
+          flag-name: update-trigger/trigger
+          working-directory: update-trigger/trigger
+
   finish:
+    if: 'always()'
     needs:
       - test-updater
       - test-holidays-api
+      - test-update-trigger
     runs-on: ubuntu-latest
     steps:
       - name: finish

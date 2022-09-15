@@ -51,7 +51,7 @@ func loadGitHubToken(ctx context.Context) (string, error) {
 
 	token, err := svc.GetParameter(ctx, &ssm.GetParameterInput{
 		Name:           aws.String(os.Getenv("GITHUB_TOKEN")),
-		WithDecryption: true,
+		WithDecryption: aws.Bool(true),
 	})
 	if err != nil {
 		return "", err
