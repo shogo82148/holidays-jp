@@ -80,7 +80,7 @@ jobs:
           working-directory: update-trigger/trigger
 
   finish:
-    if: always
+    if: 'always()'
     needs:
       - test-updater
       - test-holidays-api
