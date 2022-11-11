@@ -4,6 +4,10 @@ on:
     types: [update]
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   update:
     runs-on: ubuntu-latest
