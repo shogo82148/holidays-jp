@@ -27,9 +27,9 @@ import (
 
 // 内閣府ホーム  >  内閣府の政策  >  制度  >  国民の祝日について
 // https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
-const syukujitsuURL = "https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv"
+const syukujitsuURL = "https://www8.cao.go.jp/chosei/shukujitsu/shukujitsu.csv"
 
-const rawDataPath = "../syukujitsu.csv"
+const rawDataPath = "../shukujitsu.csv"
 
 func main() {
 	if err := _main(); err != nil {
