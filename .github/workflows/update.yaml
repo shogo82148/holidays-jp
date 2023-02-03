@@ -31,7 +31,7 @@ jobs:
         run: go mod download
         working-directory: updater
 
-      - name: Update shukujitsu.csv
+      - name: Update syukujitsu.csv
         run: go run main.go
         working-directory: updater
 
@@ -43,4 +43,4 @@ jobs:
         uses: shogo82148/actions-commit-and-create-pr@v1
         with:
           github-token: ${{ steps.token.outputs.token }}
-          commit-message: "update shukujitsu.csv"
+          commit-message: "update syukujitsu.csv"
