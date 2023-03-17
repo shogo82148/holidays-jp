@@ -13,23 +13,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: "1.19"
-
       - name: Check out code
         uses: actions/checkout@v3
 
-      - uses: actions/cache@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      - name: Install Dependencies
-        run: go mod download
-        working-directory: updater
+          go-version-file: 'updater/go.mod'
+          cache-dependency-path: 'updater/go.sum'
 
       - name: Update syukujitsu.csv
         run: go run main.go
