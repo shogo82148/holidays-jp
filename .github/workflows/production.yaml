@@ -14,26 +14,14 @@ jobs:
     environment: production
 
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: "1.19"
-
       - name: Check out code
         uses: actions/checkout@v3
 
-      - uses: actions/cache@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      - name: Install Dependencies for the API
-        run: go mod download
-        working-directory: holidays-api
-      - name: Install Dependencies for the update-trigger
-        run: go mod download
-        working-directory: update-trigger/trigger
+          go-version-file: 'holidays-api/go.mod'
+          cache-dependency-path: "**/go.sum"
 
       - name: build the API
         run: make build

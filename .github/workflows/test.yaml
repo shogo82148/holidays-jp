@@ -12,8 +12,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version-file: 'updater/go.mod'
-          cache-dependency-path: 'updater/go.mod'
-          cache: true
+          cache-dependency-path: 'updater/go.sum'
 
       - name: Test
         run: go test -race -v -coverprofile=profile.cov ./...
@@ -39,7 +38,6 @@ jobs:
         with:
           go-version-file: 'holidays-api/go.mod'
           cache-dependency-path: 'holidays-api/go.mod'
-          cache: true
 
       - name: Test
         run: go test -race -v -coverprofile=profile.cov ./...
