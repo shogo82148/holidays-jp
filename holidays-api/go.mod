@@ -4,7 +4,5 @@ go 1.20
 
 require (
 	github.com/google/go-cmp v0.5.9
-	github.com/shogo82148/ridgenative v1.3.0
+	github.com/shogo82148/ridgenative v1.4.0
 )
-
-require github.com/aws/aws-lambda-go v1.36.1 // indirect
