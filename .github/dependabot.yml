@@ -4,7 +4,7 @@
 version: 2
 updates:
   - package-ecosystem: "gomod"
-    directory: "/"
+    directory: "/trigger"
     schedule:
       interval: "daily"
     groups:
