@@ -82,6 +82,7 @@ Resources:
                   - "iam:TagRole"
                   - "iam:UntagRole"
                   - "iam:DeleteRole"
+                  - "iam:PassRole"
 
                   # handle Service Linked Roles
                   - "iam:ListPoliciesGrantingServiceAccess"
