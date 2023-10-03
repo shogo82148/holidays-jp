@@ -103,6 +103,84 @@ func TestFindHolidaysInYear(t *testing.T) {
 	}
 }
 
+func TestCalcHolidaysInRange(t *testing.T) {
+	t.Run("2000-01-01 to 2000-01-09", func(t *testing.T) {
+		from := Date{Year: 2000, Month: time.January, Day: 1}
+		to := Date{Year: 2000, Month: time.January, Day: 9}
+		got := calcHolidaysInRange(from, to)
+		want := []Holiday{
+			{
+				Date: "2000-01-01",
+				Name: "元日",
+			},
+		}
+
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("holidays not match: (-want/+got)\n%s", diff)
+		}
+	})
+
+	t.Run("2000-01-01 to 2000-01-10", func(t *testing.T) {
+		from := Date{Year: 2000, Month: time.January, Day: 1}
+		to := Date{Year: 2000, Month: time.January, Day: 10}
+		got := calcHolidaysInRange(from, to)
+		want := []Holiday{
+			{
+				Date: "2000-01-01",
+				Name: "元日",
+			},
+			{
+				Date: "2000-01-10",
+				Name: "成人の日",
+			},
+		}
+
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("holidays not match: (-want/+got)\n%s", diff)
+		}
+	})
+
+	t.Run("2000-01-02 to 2000-01-10", func(t *testing.T) {
+		from := Date{Year: 2000, Month: time.January, Day: 2}
+		to := Date{Year: 2000, Month: time.January, Day: 10}
+		got := calcHolidaysInRange(from, to)
+		want := []Holiday{
+			{
+				Date: "2000-01-10",
+				Name: "成人の日",
+			},
+		}
+
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("holidays not match: (-want/+got)\n%s", diff)
+		}
+	})
+
+	t.Run("2000-12-01 to 2001-01-31", func(t *testing.T) {
+		from := Date{Year: 2000, Month: time.December, Day: 1}
+		to := Date{Year: 2001, Month: time.January, Day: 31}
+		got := calcHolidaysInRange(from, to)
+		want := []Holiday{
+			{
+				Date: "2000-12-23",
+				Name: "天皇誕生日",
+			},
+			{
+				Date: "2001-01-01",
+				Name: "元日",
+			},
+			{
+				Date: "2001-01-08",
+				Name: "成人の日",
+			},
+		}
+
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("holidays not match: (-want/+got)\n%s", diff)
+		}
+	})
+}
+
 func TestCalcHolidaysInMonthWithoutInLieu(t *testing.T) {
 	got := calcHolidaysInMonthWithoutInLieu(2022, time.January)
 	want := []Holiday{

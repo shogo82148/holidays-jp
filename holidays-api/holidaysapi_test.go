@@ -31,6 +31,20 @@ func TestServeHTTP(t *testing.T) {
 		}
 	})
 
+	t.Run("holidays", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "http://example.com/holidays", nil)
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+
+		resp := w.Result()
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("unexpected status code: want %d, got %d", http.StatusOK, resp.StatusCode)
+		}
+		if resp.Header.Get("Cache-Control") == "" {
+			t.Error("Cache-Control is not set")
+		}
+	})
+
 	t.Run("year", func(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "http://example.com/2000", nil)
 		w := httptest.NewRecorder()
