@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -22,6 +23,38 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+var errInvalidDateFormat = errors.New("holidaysapi: invalid date format")
+
+func parseDate(s string) (holiday.Date, error) {
+	y, s, ok := strings.Cut(s, "-")
+	if !ok {
+		return holiday.Date{}, errInvalidDateFormat
+	}
+	m, s, ok := strings.Cut(s, "-")
+	if !ok {
+		return holiday.Date{}, errInvalidDateFormat
+	}
+	d := s
+
+	year, err := parseInt(y, 4)
+	if err != nil || year < 1 || year > 9999 {
+		return holiday.Date{}, errInvalidDateFormat
+	}
+	month, err := parseInt(m, 2)
+	if err != nil || month < 1 || month > 12 {
+		return holiday.Date{}, errInvalidDateFormat
+	}
+	day, err := parseInt(d, 2)
+	if err != nil || day < 1 || day > 31 {
+		return holiday.Date{}, errInvalidDateFormat
+	}
+	return holiday.Date{
+		Year:  year,
+		Month: time.Month(month),
+		Day:   day,
+	}, nil
 }
 
 // Response is the response of Handler.
@@ -48,6 +81,17 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		h.responseNotFound(w)
 		return
 	}
+
+	path := r.URL.Path
+	path = strings.TrimPrefix(path, "/")
+	path = strings.TrimSuffix(path, "/")
+	if path == "holidays" {
+		if err := h.holidaysInRange(w, r.URL); err != nil {
+			h.responseNotFound(w)
+		}
+		return
+	}
+
 	year, month, day, err := parsePath(r.URL.Path)
 	if err != nil {
 		h.responseNotFound(w)
@@ -160,6 +204,28 @@ func (h *Handler) holidaysInYear(w http.ResponseWriter, year int) {
 
 	holidays := holiday.FindHolidaysInYear(year)
 	h.responseHolidays(w, holidays)
+}
+
+func (h *Handler) holidaysInRange(w http.ResponseWriter, u *url.URL) error {
+	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 24*60*60))
+
+	q := u.Query()
+	if !q.Has("from") || !q.Has("to") {
+		h.holidaysInYear(w, time.Now().In(jst).Year())
+		return nil
+	}
+	from, err := parseDate(q.Get("from"))
+	if err != nil {
+		return err
+	}
+	to, err := parseDate(q.Get("to"))
+	if err != nil {
+		return err
+	}
+
+	holidays := holiday.FindHolidaysInRange(from, to)
+	h.responseHolidays(w, holidays)
+	return nil
 }
 
 func (h *Handler) responseHolidays(w http.ResponseWriter, holidays []holiday.Holiday) {

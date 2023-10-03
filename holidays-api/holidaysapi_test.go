@@ -31,7 +31,7 @@ func TestServeHTTP(t *testing.T) {
 		}
 	})
 
-	t.Run("holidays", func(t *testing.T) {
+	t.Run("current year", func(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "http://example.com/holidays", nil)
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, req)
@@ -42,6 +42,67 @@ func TestServeHTTP(t *testing.T) {
 		}
 		if resp.Header.Get("Cache-Control") == "" {
 			t.Error("Cache-Control is not set")
+		}
+	})
+
+	t.Run("range", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "http://example.com/holidays?from=2000-01-01&to=2000-06-31", nil)
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+
+		resp := w.Result()
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("unexpected status code: want %d, got %d", http.StatusOK, resp.StatusCode)
+		}
+		if resp.Header.Get("Cache-Control") == "" {
+			t.Error("Cache-Control is not set")
+		}
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var got Response
+		if err := json.Unmarshal(body, &got); err != nil {
+			t.Fatal(err)
+		}
+		want := Response{
+			Holidays: []Holiday{
+				{
+					Date: "2000-01-01",
+					Name: "元日",
+				},
+				{
+					Date: "2000-01-10",
+					Name: "成人の日",
+				},
+				{
+					Date: "2000-02-11",
+					Name: "建国記念の日",
+				},
+				{
+					Date: "2000-03-20",
+					Name: "春分の日",
+				},
+				{
+					Date: "2000-04-29",
+					Name: "みどりの日",
+				},
+				{
+					Date: "2000-05-03",
+					Name: "憲法記念日",
+				},
+				{
+					Date: "2000-05-04",
+					Name: "休日",
+				},
+				{
+					Date: "2000-05-05",
+					Name: "こどもの日",
+				},
+			},
+		}
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("unexpected response: (-want/+got)\n%s", diff)
 		}
 	})
 
@@ -277,4 +338,22 @@ func TestParsePath(t *testing.T) {
 			t.Errorf("%q: unexpected day: want %d, got %d", tt.path, tt.day, day)
 		}
 	}
+}
+
+func FuzzParseDate(f *testing.F) {
+	f.Add("2006-01-02")
+	f.Fuzz(func(t *testing.T, date string) {
+		d0, err := parseDate(date)
+		if err != nil {
+			return
+		}
+		s0 := d0.String()
+		d1, err := parseDate(s0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if d0 != d1 {
+			t.Errorf("unexpected date: want %s, got %s", d0, d1)
+		}
+	})
 }

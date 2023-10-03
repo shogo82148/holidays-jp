@@ -83,13 +83,13 @@ func FindHolidaysInYear(year int) []Holiday {
 	return calcHolidaysInYear(year)
 }
 
-func FindHolidayInRange(from, to Date) []Holiday {
+func FindHolidaysInRange(from, to Date) []Holiday {
 	if from.cmp(to) > 0 {
 		from, to = to, from
 	}
 	if holidaysStartYear <= from.Year && to.Year <= holidaysEndYear {
 		// return from pre-calculated holidays
-		return findHolidayInRange(from, to)
+		return findHolidaysInRange(from, to)
 	}
 
 	// calculate holidays based on the law
@@ -134,18 +134,18 @@ func findHoliday(year int, month time.Month, day int) (Holiday, bool) {
 func findHolidaysInMonth(year int, month time.Month) []Holiday {
 	startDate := Date{year, month, 1}
 	endDate := Date{year, month, 31}
-	return findHolidayInRange(startDate, endDate)
+	return findHolidaysInRange(startDate, endDate)
 }
 
 // findHolidaysInYear returns holidays in the specific year.
 func findHolidaysInYear(year int) []Holiday {
 	startDate := Date{year, time.January, 1}
 	endDate := Date{year, time.December, 31}
-	return findHolidayInRange(startDate, endDate)
+	return findHolidaysInRange(startDate, endDate)
 }
 
-// findHolidayInRange returns holidays in the specific range.
-func findHolidayInRange(from, to Date) []Holiday {
+// findHolidaysInRange returns holidays in the specific range.
+func findHolidaysInRange(from, to Date) []Holiday {
 	startDate := from.String()
 	endDate := to.String()
 
