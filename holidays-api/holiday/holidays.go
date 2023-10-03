@@ -1,12 +1,47 @@
 package holiday
 
 import (
+	"cmp"
 	"fmt"
 	"math"
 	"sort"
 	"strings"
 	"time"
 )
+
+// Date represents a date.
+type Date struct {
+	Year  int
+	Month time.Month
+	Day   int
+}
+
+func (a Date) cmp(b Date) int {
+	if a.Year != b.Year {
+		return cmp.Compare(a.Year, b.Year)
+	}
+	if a.Month != b.Month {
+		return cmp.Compare(a.Month, b.Month)
+	}
+	return cmp.Compare(a.Day, b.Day)
+}
+
+func (d Date) String() string {
+	return fmt.Sprintf("%04d-%02d-%02d", d.Year, int(d.Month), d.Day)
+}
+
+// firstDay returns the first day of the month.
+func (d Date) firstDay() Date {
+	return Date{d.Year, d.Month, 1}
+}
+
+// nextMonth returns the first day of the next month.
+func (d Date) nextMonth() Date {
+	if d.Month == time.December {
+		return Date{d.Year + 1, time.January, 1}
+	}
+	return Date{d.Year, d.Month + 1, 1}
+}
 
 // FindHoliday returns whether the specific day is a holiday.
 func FindHoliday(year int, month time.Month, day int) (Holiday, bool) {
@@ -48,6 +83,19 @@ func FindHolidaysInYear(year int) []Holiday {
 	return calcHolidaysInYear(year)
 }
 
+func FindHolidaysInRange(from, to Date) []Holiday {
+	if from.cmp(to) > 0 {
+		from, to = to, from
+	}
+	if holidaysStartYear <= from.Year && to.Year <= holidaysEndYear {
+		// return from pre-calculated holidays
+		return findHolidaysInRange(from, to)
+	}
+
+	// calculate holidays based on the law
+	return calcHolidaysInRange(from, to)
+}
+
 const dateLayout = "2006-01-02"
 
 func mustParseDate(date string) time.Time {
@@ -84,22 +132,22 @@ func findHoliday(year int, month time.Month, day int) (Holiday, bool) {
 
 // findHolidaysInMonth returns holidays in the specific month.
 func findHolidaysInMonth(year int, month time.Month) []Holiday {
-	startDate := fmt.Sprintf("%04d-%02d-01", year, int(month))
-	endDate := fmt.Sprintf("%04d-%02d-99", year, int(month))
-
-	start := sort.Search(len(holidays), func(i int) bool {
-		return holidays[i].Date >= startDate
-	})
-	end := sort.Search(len(holidays), func(i int) bool {
-		return holidays[i].Date >= endDate
-	})
-	return holidays[start:end]
+	startDate := Date{year, month, 1}
+	endDate := Date{year, month, 31}
+	return findHolidaysInRange(startDate, endDate)
 }
 
 // findHolidaysInYear returns holidays in the specific year.
 func findHolidaysInYear(year int) []Holiday {
-	startDate := fmt.Sprintf("%04d-01-01", year)
-	endDate := fmt.Sprintf("%04d-99-99", year)
+	startDate := Date{year, time.January, 1}
+	endDate := Date{year, time.December, 31}
+	return findHolidaysInRange(startDate, endDate)
+}
+
+// findHolidaysInRange returns holidays in the specific range.
+func findHolidaysInRange(from, to Date) []Holiday {
+	startDate := from.String()
+	endDate := to.String()
 
 	start := sort.Search(len(holidays), func(i int) bool {
 		return holidays[i].Date >= startDate
@@ -107,6 +155,9 @@ func findHolidaysInYear(year int) []Holiday {
 	end := sort.Search(len(holidays), func(i int) bool {
 		return holidays[i].Date >= endDate
 	})
+	if end < len(holidays) && holidays[end].Date == endDate {
+		end++
+	}
 	return holidays[start:end]
 }
 
@@ -345,6 +396,27 @@ func calcHolidaysInYear(year int) []Holiday {
 	for month := time.January; month <= time.December; month++ {
 		holidays := calcHolidaysInMonth(year, month)
 		result = append(result, holidays...)
+	}
+	return result
+}
+
+func calcHolidaysInRange(from, to Date) []Holiday {
+	if from.cmp(to) > 0 {
+		from, to = to, from
+	}
+
+	firstDay := to.firstDay()
+
+	startDate := from.String()
+	endDate := to.String()
+	var result []Holiday
+	for d := from.firstDay(); d.cmp(firstDay) <= 0; d = d.nextMonth() {
+		holidays := calcHolidaysInMonth(d.Year, d.Month)
+		for _, h := range holidays {
+			if startDate <= h.Date && h.Date <= endDate {
+				result = append(result, h)
+			}
+		}
 	}
 	return result
 }

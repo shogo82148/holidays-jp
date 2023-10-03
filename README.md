@@ -57,6 +57,28 @@ curl https://holidays-jp.shogo82148.com/2021/01 | jq .
 }
 ```
 
+### List holidays in a range
+
+`GET /holidays?from={2006-01-02}&to={2006-01-02}` lists holidays in the range.
+
+Example: list holidays in January 2021.
+
+```
+curl 'https://holidays-jp.shogo82148.com/holidays?from=2021-01-01&to=2021-01-31' | jq .
+{
+  "holidays": [
+    {
+      "date": "2021-01-01",
+      "name": "元日"
+    },
+    {
+      "date": "2021-01-11",
+      "name": "成人の日"
+    }
+  ]
+}
+```
+
 ### Check whether the day is a holiday
 
 `GET /{year}/{month}/{day}` returns whether the day is a holiday.
