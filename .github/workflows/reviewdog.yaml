@@ -13,11 +13,6 @@ jobs:
         with:
           reporter: github-pr-review
           level: warning
-      - name: golangci-lint
-        uses: reviewdog/action-golangci-lint@v2
-        with:
-          reporter: github-pr-review
-          level: warning
           workdir: ./holidays-api/
 
   actionlint:
