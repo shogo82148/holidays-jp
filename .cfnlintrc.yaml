@@ -1,0 +1,6 @@
+# configuration file for cfn-lint https://github.com/aws-cloudformation/cfn-lint
+
+templates:
+  - cicd.yaml
+  - template.yaml
+  - update-trigger/template.yaml
