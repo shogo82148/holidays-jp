@@ -249,6 +249,7 @@ func (h *Handler) responseHolidays(w http.ResponseWriter, holidays []holiday.Hol
 		log.Printf("failed to marshal response: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		io.WriteString(w, `{"error":"internal server error"}`)
+		return
 	}
 
 	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
