@@ -16,7 +16,7 @@ Resources:
     Properties:
       CodeUri: holidays-api/
       Handler: holidays-api
-      Runtime: provided.al2
+      Runtime: provided.al2023
       Architectures: [arm64]
       Events:
         CatchAll:
