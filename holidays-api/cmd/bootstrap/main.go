@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	_ "time/tzdata"
 
 	holidays "github.com/shogo82148/holidays-jp/holidays-api"
 	"github.com/shogo82148/ridgenative"

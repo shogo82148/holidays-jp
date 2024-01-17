@@ -16,7 +16,7 @@ Resources:
     Properties:
       CodeUri: trigger/
       Handler: trigger
-      Runtime: provided.al2
+      Runtime: provided.al2023
       Architectures: [arm64]
       Events:
         Schedule:
