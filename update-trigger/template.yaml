@@ -20,13 +20,15 @@ Resources:
       Architectures: [arm64]
       Events:
         Schedule:
-          Type: Schedule
+          Type: ScheduleV2
           Properties:
-            Schedule: "rate(1 day)"
-            Name: UpdateTrigger
+            ScheduleExpression: "rate(1 day)"
             Description: Create a repository dispatch event for https://github.com/shogo82148/holidays-jp
-            Enabled: true
             Input: '{"owner":"shogo82148","repo":"holidays-jp","event_type":"update"}'
+            PermissionsBoundary: !Sub "arn:aws:iam::${AWS::AccountId}:policy/holidays-jp-permissions-boundary-ap-northeast-1"
+            FlexibleTimeWindow:
+              Mode: FLEXIBLE
+              MaximumWindowInMinutes: 60
       Environment:
         Variables:
           GITHUB_API: https://api.github.com
