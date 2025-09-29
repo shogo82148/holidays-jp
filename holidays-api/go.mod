@@ -1,6 +1,6 @@
 module github.com/shogo82148/holidays-jp/holidays-api
 
-go 1.24.1
+go 1.25.1
 
 require (
 	github.com/google/go-cmp v0.7.0
