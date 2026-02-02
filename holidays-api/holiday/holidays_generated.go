@@ -5,7 +5,7 @@ package holiday
 // the year range of pre-calculated holidays
 const (
 	holidaysStartYear = 1955
-	holidaysEndYear   = 2026
+	holidaysEndYear   = 2027
 )
 
 // 内閣府ホーム  >  内閣府の政策  >  制度  >  国民の祝日について
@@ -4210,6 +4210,74 @@ var holidays = []Holiday{
 	},
 	{
 		Date: "2026-11-23",
+		Name: "勤労感謝の日",
+	},
+	{
+		Date: "2027-01-01",
+		Name: "元日",
+	},
+	{
+		Date: "2027-01-11",
+		Name: "成人の日",
+	},
+	{
+		Date: "2027-02-11",
+		Name: "建国記念の日",
+	},
+	{
+		Date: "2027-02-23",
+		Name: "天皇誕生日",
+	},
+	{
+		Date: "2027-03-21",
+		Name: "春分の日",
+	},
+	{
+		Date: "2027-03-22",
+		Name: "休日",
+	},
+	{
+		Date: "2027-04-29",
+		Name: "昭和の日",
+	},
+	{
+		Date: "2027-05-03",
+		Name: "憲法記念日",
+	},
+	{
+		Date: "2027-05-04",
+		Name: "みどりの日",
+	},
+	{
+		Date: "2027-05-05",
+		Name: "こどもの日",
+	},
+	{
+		Date: "2027-07-19",
+		Name: "海の日",
+	},
+	{
+		Date: "2027-08-11",
+		Name: "山の日",
+	},
+	{
+		Date: "2027-09-20",
+		Name: "敬老の日",
+	},
+	{
+		Date: "2027-09-23",
+		Name: "秋分の日",
+	},
+	{
+		Date: "2027-10-11",
+		Name: "スポーツの日",
+	},
+	{
+		Date: "2027-11-03",
+		Name: "文化の日",
+	},
+	{
+		Date: "2027-11-23",
 		Name: "勤労感謝の日",
 	},
 }
