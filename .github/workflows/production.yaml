@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Set up Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@7a3fe6cf4cb3a834922a1244abfce67bcef6a0c5 # v6.2.0
         with:
           go-version-file: 'holidays-api/go.mod'
           cache-dependency-path: "**/go.sum"
@@ -29,7 +29,7 @@ jobs:
         run: make build
         working-directory: update-trigger
 
-      - uses: fuller-inc/actions-aws-assume-role@v1
+      - uses: fuller-inc/actions-aws-assume-role@c936409c1d11aae9fcc2603e09412a352c1d62ee # v1.8.0
         with:
           aws-region: ap-northeast-1
           role-to-assume: arn:aws:iam::445285296882:role/holidays-jp-github-actions-ap-northeast-1
