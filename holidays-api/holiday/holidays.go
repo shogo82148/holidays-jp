@@ -187,7 +187,7 @@ type weekdayHolyday struct {
 func calcHolidaysInMonthWithoutInLieu(year int, month time.Month) []Holiday {
 	// search the rule of this year
 	var rule *annuallyHolidaysRule
-	for i := 0; i < len(annuallyHolidaysRules); i++ {
+	for i := range annuallyHolidaysRules {
 		if year >= annuallyHolidaysRules[i].BeginYear {
 			rule = &annuallyHolidaysRules[i]
 			break
