@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: shogo82148/actions-cfn-lint@e51df0c00efc749c371039f2d6e026be2c6ec23b # v4.49.0
+      - uses: shogo82148/actions-cfn-lint@4b4195887055a3f3b7a158153801e9f0866e392d # v4.50.0
         with:
           reporter: github-pr-review
           level: warning
