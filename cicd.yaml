@@ -115,18 +115,14 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              AWS: arn:aws:iam::053160724612:root
-            Action: "sts:AssumeRole"
+              Federated: !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com"
+            Action: "sts:AssumeRoleWithWebIdentity"
             Condition:
               StringEquals:
-                "sts:ExternalId": "R_kgDOF1U3OQ"
+                "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+                "token.actions.githubusercontent.com:environment": "production"
               StringLike:
-                "aws:RequestTag/Audience": "*"
-                "aws:RequestTag/Environment": "production"
-          - Effect: Allow
-            Principal:
-              AWS: arn:aws:iam::053160724612:root
-            Action: "sts:TagSession"
+                "token.actions.githubusercontent.com:sub": "repo:shogo82148/holidays-jp:*"
       Policies:
         - PolicyName: SAMDeployment
           PolicyDocument:
