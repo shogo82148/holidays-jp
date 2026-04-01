@@ -31,17 +31,10 @@ Resources:
       Domain:
         CertificateArn: !Ref Certificate
         DomainName: "holidays-jp.shogo82148.com"
+        Route53:
+          HostedZoneName: "shogo82148.com."
+          IpV6: true
       CorsConfiguration: true
-
-  RecordSet:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      HostedZoneName: "shogo82148.com."
-      Name: "holidays-jp.shogo82148.com"
-      Type: A
-      AliasTarget:
-        DNSName: !GetAtt ApiGatewayDomainNameV24c58e33fd3.RegionalDomainName
-        HostedZoneId: !GetAtt ApiGatewayDomainNameV24c58e33fd3.RegionalHostedZoneId
 
   Certificate:
     Type: AWS::CertificateManager::Certificate
