@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-      - uses: shogo82148/actions-cfn-lint@8b66fd35b9b48bca4062d7578464589b6168a99d # v4.62.0
+      - uses: shogo82148/actions-cfn-lint@cf20da4467eda3b5b797e098cb0eaa619c792ad7 # v4.63.0
         with:
           reporter: github-pr-review
           level: warning
