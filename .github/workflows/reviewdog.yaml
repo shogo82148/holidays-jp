@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
       - name: Check out code into the Go module directory
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: golangci-lint
         uses: reviewdog/action-golangci-lint@c76cceaaab89abe74e649d2e34c6c9adc26662d2 # v2.10.0
         with:
@@ -18,7 +18,7 @@ jobs:
   actionlint:
     runs-on: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: reviewdog/action-actionlint@6fb7acc99f4a1008869fa8a0f09cfca740837d9d # v1.72.0
         with:
           reporter: github-pr-review
@@ -28,7 +28,7 @@ jobs:
     name: cfn-lint
     runs-on: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: shogo82148/actions-cfn-lint@cf20da4467eda3b5b797e098cb0eaa619c792ad7 # v4.63.0
         with:
           reporter: github-pr-review
