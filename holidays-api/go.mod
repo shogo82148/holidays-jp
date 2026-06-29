@@ -4,5 +4,5 @@ go 1.26.0
 
 require (
 	github.com/google/go-cmp v0.7.0
-	github.com/shogo82148/ridgenative v1.5.0
+	github.com/shogo82148/ridgenative v1.5.1
 )
