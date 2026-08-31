@@ -19,7 +19,7 @@ jobs:
         working-directory: updater
 
       - name: Send coverage
-        uses: shogo82148/actions-goveralls@8781f5dd05b691c4dd042d5e859c11c73e0104fa # v1.11.1
+        uses: shogo82148/actions-goveralls@77a1912dca42260ee3e97f61bd13ea7ef40baa93 # v1.11.2
         with:
           path-to-profile: profile.cov
           parallel: true
@@ -44,7 +44,7 @@ jobs:
         working-directory: holidays-api
 
       - name: Send coverage
-        uses: shogo82148/actions-goveralls@8781f5dd05b691c4dd042d5e859c11c73e0104fa # v1.11.1
+        uses: shogo82148/actions-goveralls@77a1912dca42260ee3e97f61bd13ea7ef40baa93 # v1.11.2
         with:
           path-to-profile: profile.cov
           parallel: true
@@ -70,7 +70,7 @@ jobs:
         working-directory: update-trigger/trigger
 
       - name: Send coverage
-        uses: shogo82148/actions-goveralls@8781f5dd05b691c4dd042d5e859c11c73e0104fa # v1.11.1
+        uses: shogo82148/actions-goveralls@77a1912dca42260ee3e97f61bd13ea7ef40baa93 # v1.11.2
         with:
           path-to-profile: profile.cov
           parallel: true
@@ -86,6 +86,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: finish
-        uses: shogo82148/actions-goveralls@8781f5dd05b691c4dd042d5e859c11c73e0104fa # v1.11.1
+        uses: shogo82148/actions-goveralls@77a1912dca42260ee3e97f61bd13ea7ef40baa93 # v1.11.2
         with:
           parallel-finished: true
