@@ -1,6 +1,7 @@
 package holidaysapi
 
 import (
+	"embed"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,6 +15,9 @@ import (
 
 	"github.com/shogo82148/holidays-jp/holidays-api/holiday"
 )
+
+//go:embed index.html
+var staticFiles embed.FS
 
 var jst *time.Location
 
@@ -85,6 +89,10 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	path = strings.TrimPrefix(path, "/")
 	path = strings.TrimSuffix(path, "/")
+	if path == "" {
+		h.responseIndex(w)
+		return
+	}
 	if path == "holidays" {
 		if err := h.holidaysInRange(w, r.URL); err != nil {
 			h.responseNotFound(w)
@@ -251,6 +259,26 @@ func (h *Handler) responseHolidays(w http.ResponseWriter, holidays []holiday.Hol
 		io.WriteString(w, `{"error":"internal server error"}`)
 		return
 	}
+
+	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
+}
+
+func (h *Handler) responseIndex(w http.ResponseWriter) {
+	data, err := staticFiles.ReadFile("index.html")
+	if err != nil {
+		log.Printf("failed to read index.html: %v", err)
+		h.responseNotFound(w)
+		return
+	}
+
+	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", 24*60*60))
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Link", "<https://github.com/sponsors/shogo82148>; rel=\"author\"")
+
+	// ref. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#examples
+	w.Header().Set("Strict-Transport-Security", "max-age=63072000")
 
 	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
 	w.WriteHeader(http.StatusOK)
