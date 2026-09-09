@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -13,7 +14,7 @@ import (
 func TestServeHTTP(t *testing.T) {
 	h := NewHandler()
 	t.Run("not found", func(t *testing.T) {
-		req := httptest.NewRequest(http.MethodGet, "http://example.com/", nil)
+		req := httptest.NewRequest(http.MethodGet, "http://example.com/not-found", nil)
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, req)
 
@@ -28,6 +29,27 @@ func TestServeHTTP(t *testing.T) {
 		var v any
 		if err := json.Unmarshal(body, &v); err != nil {
 			t.Fatal(err)
+		}
+	})
+
+	t.Run("index", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "http://example.com/", nil)
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+
+		resp := w.Result()
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("unexpected status code: want %d, got %d", http.StatusOK, resp.StatusCode)
+		}
+		if got := resp.Header.Get("Content-Type"); got != "text/html; charset=utf-8" {
+			t.Errorf("unexpected content type: want %q, got %q", "text/html; charset=utf-8", got)
+		}
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(string(body), "holidays-jp API") {
+			t.Errorf("unexpected body: %s", body)
 		}
 	})
 

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>holidays-jp API リファレンス</title>
+<meta name="description" content="日本の祝日を返すシンプルな API、holidays-jp の API リファレンスです。">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --fg: #1b1f24;
+    --muted: #5c6570;
+    --border: #e2e6ea;
+    --accent: #b7282e;
+    --code-bg: #f5f7f9;
+    --code-fg: #1b1f24;
+    --method-bg: #e8f0ea;
+    --method-fg: #1f7a43;
+    --link: #0a5cc0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16191d;
+      --fg: #e6e9ec;
+      --muted: #9aa4af;
+      --border: #2b3138;
+      --accent: #ff6b70;
+      --code-bg: #1e2329;
+      --code-fg: #e6e9ec;
+      --method-bg: #1c3326;
+      --method-fg: #6cd39a;
+      --link: #6bb0ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2.5rem; }
+  h1 { font-size: 1.9rem; margin: 0 0 .4rem; letter-spacing: -.01em; }
+  .tagline { color: var(--muted); margin: 0; font-size: 1.05rem; }
+  h2 {
+    font-size: 1.3rem;
+    margin: 3rem 0 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  h3 { font-size: 1.05rem; margin: 2rem 0 .5rem; }
+  p { margin: .6rem 0; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .9em;
+    background: var(--code-bg);
+    padding: .12em .4em;
+    border-radius: 4px;
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 1rem 1.1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    font-size: .875rem;
+    line-height: 1.6;
+  }
+  pre code { background: none; padding: 0; }
+  .endpoint {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    flex-wrap: wrap;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: .95rem;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .55rem .8rem;
+    margin: .8rem 0;
+  }
+  .method {
+    background: var(--method-bg);
+    color: var(--method-fg);
+    font-weight: 700;
+    font-size: .78rem;
+    letter-spacing: .04em;
+    padding: .12em .55em;
+    border-radius: 5px;
+  }
+  .path { font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .92rem; }
+  th, td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  ul { padding-left: 1.3rem; }
+  li { margin: .3rem 0; }
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: .9rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>holidays-jp API リファレンス</h1>
+    <p class="tagline">日本の祝日を返すシンプルな API です。認証不要、JSON で応答します。</p>
+  </header>
+
+  <p>
+    ベース URL は <code>https://holidays-jp.shogo82148.com</code> です。
+    すべてのエンドポイントは <code>GET</code> リクエストを受け付け、
+    <code>Content-Type: application/json</code> の JSON を返します。
+  </p>
+
+  <h2>レスポンス形式</h2>
+  <p>すべてのエンドポイントは、祝日の配列を <code>holidays</code> フィールドに格納したオブジェクトを返します。</p>
+  <pre><code>{
+  "holidays": [
+    { "date": "2021-01-01", "name": "元日" }
+  ]
+}</code></pre>
+  <table>
+    <tr><th>フィールド</th><th>型</th><th>説明</th></tr>
+    <tr><td><code>holidays</code></td><td>array</td><td>祝日オブジェクトの配列。該当する祝日がない場合は空配列。</td></tr>
+    <tr><td><code>holidays[].date</code></td><td>string</td><td>祝日の日付（<code>YYYY-MM-DD</code> 形式）。</td></tr>
+    <tr><td><code>holidays[].name</code></td><td>string</td><td>祝日の名称（例: 元日）。</td></tr>
+  </table>
+
+  <h2>エンドポイント</h2>
+
+  <h3>1 年分の祝日を取得</h3>
+  <div class="endpoint"><span class="method">GET</span><span class="path">/{year}</span></div>
+  <p>指定した年（<code>YYYY</code>）に含まれるすべての祝日を返します。</p>
+  <pre><code>curl https://holidays-jp.shogo82148.com/2021</code></pre>
+
+  <h3>1 か月分の祝日を取得</h3>
+  <div class="endpoint"><span class="method">GET</span><span class="path">/{year}/{month}</span></div>
+  <p>指定した年月（<code>YYYY/MM</code>）に含まれる祝日を返します。</p>
+  <pre><code>curl https://holidays-jp.shogo82148.com/2021/01</code></pre>
+
+  <h3>特定の日が祝日かどうかを確認</h3>
+  <div class="endpoint"><span class="method">GET</span><span class="path">/{year}/{month}/{day}</span></div>
+  <p>
+    指定した日（<code>YYYY/MM/DD</code>）が祝日であれば、その祝日情報を返します。
+    祝日でない場合は <code>holidays</code> が空配列になります。
+  </p>
+  <pre><code>curl https://holidays-jp.shogo82148.com/2021/01/01</code></pre>
+
+  <h3>期間を指定して祝日を取得</h3>
+  <div class="endpoint"><span class="method">GET</span><span class="path">/holidays?from={YYYY-MM-DD}&amp;to={YYYY-MM-DD}</span></div>
+  <p>
+    <code>from</code> から <code>to</code> までの期間に含まれる祝日を返します。
+    <code>from</code> と <code>to</code> を省略した場合は、現在の年の祝日を返します。
+  </p>
+  <table>
+    <tr><th>クエリパラメータ</th><th>説明</th></tr>
+    <tr><td><code>from</code></td><td>期間の開始日（<code>YYYY-MM-DD</code> 形式）。</td></tr>
+    <tr><td><code>to</code></td><td>期間の終了日（<code>YYYY-MM-DD</code> 形式）。</td></tr>
+  </table>
+  <pre><code>curl 'https://holidays-jp.shogo82148.com/holidays?from=2021-01-01&amp;to=2021-01-31'</code></pre>
+
+  <h2>データソース</h2>
+  <ul>
+    <li>
+      <a href="https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html" rel="noopener noreferrer">国民の祝日について - 内閣府</a>
+    </li>
+    <li>
+      <a href="https://elaws.e-gov.go.jp/document?lawid=323AC1000000178" rel="noopener noreferrer">国民の祝日に関する法律 - e-Gov 法令検索</a>
+    </li>
+  </ul>
+
+  <footer>
+    <p>
+      ソースコードとより詳しいドキュメントは
+      <a href="https://github.com/shogo82148/holidays-jp" rel="noopener noreferrer">GitHub リポジトリ</a>
+      を参照してください。
+    </p>
+  </footer>
+</div>
+</body>
+</html>
