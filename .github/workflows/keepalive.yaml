@@ -1,0 +1,20 @@
+name: Prevent scheduled workflow from being automatically disabled
+
+on:
+  schedule:
+    - cron: "8 3 * * 1"
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-slim
+    permissions:
+      actions: write
+    steps:
+      - name: Re-enable workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow enable keepalive.yaml
+          gh workflow enable update.yaml

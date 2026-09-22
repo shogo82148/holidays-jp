@@ -23,16 +23,6 @@ updates:
         patterns:
           - github.com/aws/aws-sdk-go-v2
           - github.com/aws/aws-sdk-go-v2/*
-  - package-ecosystem: "gomod"
-    directory: "/update-trigger/trigger/"
-    schedule:
-      interval: "daily"
-    groups:
-      # grouping updates of AWS SDK for Go v2
-      aws-sdk:
-        patterns:
-          - github.com/aws/aws-sdk-go-v2
-          - github.com/aws/aws-sdk-go-v2/*
 
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
