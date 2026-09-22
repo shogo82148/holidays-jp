@@ -1,7 +1,7 @@
 name: Update
 on:
-  repository_dispatch:
-    types: [update]
+  schedule:
+    - cron: "42 6 * * *"
   workflow_dispatch:
 
 permissions:

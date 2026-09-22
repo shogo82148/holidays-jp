@@ -29,9 +29,6 @@ jobs:
 
       - name: build the API
         run: make build
-      - name: build the the updater-trigger
-        run: make build
-        working-directory: update-trigger
 
       - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
         with:
@@ -40,6 +37,3 @@ jobs:
 
       - name: deploy the API
         run: make deploy
-      - name: deploy the the updater-trigger
-        run: make deploy
-        working-directory: update-trigger

@@ -3,4 +3,3 @@
 templates:
   - cicd.yaml
   - template.yaml
-  - update-trigger/template.yaml
