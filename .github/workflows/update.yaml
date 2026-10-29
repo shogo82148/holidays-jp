@@ -28,7 +28,7 @@ jobs:
 
       - name: Generate token
         id: token
-        uses: shogo82148/actions-github-app-token@bbdb11feaf1f848a9e8f84cb1d10a8b97e4d9f5b # v1.3.3
+        uses: shogo82148/actions-github-app-token@bf955a861ff7c9d64c86b567bac12d7baae5614a # v1.3.4
         with:
           permission-contents: write
           permission-pull-requests: write
