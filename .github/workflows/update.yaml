@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Set up Go
-        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        uses: actions/setup-go@v7.0.0
         with:
           go-version-file: "updater/go.mod"
           cache-dependency-path: "updater/go.sum"
@@ -28,13 +28,13 @@ jobs:
 
       - name: Generate token
         id: token
-        uses: shogo82148/actions-github-app-token@bf955a861ff7c9d64c86b567bac12d7baae5614a # v1.3.4
+        uses: shogo82148/actions-github-app-token@v1.3.4
         with:
           permission-contents: write
           permission-pull-requests: write
 
       - name: commit
-        uses: shogo82148/actions-commit-and-create-pr@b1322fe9da4037e9720e34ea221997cffcd3498d # v1.1.4
+        uses: shogo82148/actions-commit-and-create-pr@v1.1.4
         with:
           github-token: ${{ steps.token.outputs.token }}
           commit-message: "update syukujitsu.csv"
