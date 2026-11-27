@@ -15,7 +15,7 @@ workflows:
         - 'actions/checkout@v7.0.1'
         - 'reviewdog/action-actionlint@v1.84.1'
         - 'reviewdog/action-golangci-lint@v2.10.2'
-        - 'shogo82148/actions-cfn-lint@v4.88.0'
+        - 'shogo82148/actions-cfn-lint@v4.88.1'
     '.github/workflows/test.yaml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-go@v7.1.0'
@@ -56,9 +56,9 @@ dependencies:
         commit: 'sha1-284129a3ac23bc5d8ac1522e0b6511df74a8836d'
         owner_id: 48765237
         repo_id: 208542589
-    'shogo82148/actions-cfn-lint@v4.88.0':
-        ref: 'v4.88.0'
-        commit: 'sha1-c7cce13664a8a1c8eb69c9dc15c8ed1a02457e0c'
+    'shogo82148/actions-cfn-lint@v4.88.1':
+        ref: 'v4.88.1'
+        commit: 'sha1-270c1a9c3d02d0bcfef22c516e4f3c9b6ab0c547'
         owner_id: 1157344
         repo_id: 224426632
     'shogo82148/actions-commit-and-create-pr@v1.1.4':
